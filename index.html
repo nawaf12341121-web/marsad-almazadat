@@ -3,103 +3,961 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="مرصد المزادات - منصة تجمع إعلانات المزادات المتاحة في السعودية من مصادرها المختلفة.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#062653">
+
+<meta name="description" content="مرصد المزادات منصة سعودية مستقلة تجمع إعلانات وروابط المزادات في مكان واحد. اكتشف مزادات السيارات والعقارات والمعدات والمواشي وغيرها.">
+
+<meta name="robots" content="index,follow">
 <title>مرصد المزادات | كل المزادات في مكان واحد</title>
+
 <style>
-:root{--navy:#101d35;--gold:#c9a45c;--light:#f5f6f8;--text:#202a3a}
-*{box-sizing:border-box}
-body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--light);color:var(--text)}
-header{background:var(--navy);color:white;padding:22px 6%;border-bottom:3px solid var(--gold)}
-nav{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-.logo{font-size:25px;font-weight:bold;color:white}
-.logo span{color:var(--gold)}
-nav a{color:#eee;text-decoration:none;margin-right:18px;font-size:14px}
-.hero{background:linear-gradient(120deg,#101d35,#203657);color:white;text-align:center;padding:65px 20px 55px}
-.hero h1{font-size:34px;margin:0 0 15px}
-.hero p{color:#d5dce7;margin-bottom:28px}
-.search{max-width:650px;margin:auto;display:flex;background:white;padding:6px;border-radius:9px}
-.search input{flex:1;min-width:0;border:0;padding:13px;font-size:15px;outline:none}
-.search button{background:var(--gold);border:0;border-radius:6px;padding:0 25px;font-weight:bold;cursor:pointer}
-.container{max-width:1100px;margin:35px auto;padding:0 18px}
-.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.section-head h2{font-size:23px;color:var(--navy)}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 25px}
-.filters button{border:1px solid #ddd;background:white;padding:9px 17px;border-radius:20px;cursor:pointer;color:#354258}
-.filters button.active{background:var(--navy);color:white;border-color:var(--navy)}
-.empty{background:white;border:1px solid #e8e9ed;border-radius:12px;text-align:center;padding:55px 15px}
-.empty .symbol{font-size:43px;color:var(--gold)}
-.empty h3{color:var(--navy);margin:12px 0}
-.empty p{color:#78808d;line-height:1.8;font-size:14px}
-.notice{background:#fff9ed;border-right:4px solid var(--gold);padding:18px 20px;margin:35px 0;border-radius:5px;font-size:13px;line-height:2;color:#665638}
-footer{background:var(--navy);color:#cbd2dd;text-align:center;padding:25px 15px;font-size:13px;line-height:2}
-footer strong{color:var(--gold)}
-@media(max-width:600px){.hero h1{font-size:27px}.search button{padding:0 15px}.logo{font-size:21px}nav a{margin-right:8px}}
+:root {
+  --navy:#062653;
+  --navy2:#0b3269;
+  --gold:#f2b51b;
+  --bg:#f4f6fb;
+  --ink:#10264a;
+  --white:#fff;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+html {
+  scroll-behavior:smooth;
+}
+
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Tahoma,Arial,sans-serif;
+}
+
+a {
+  color:inherit;
+}
+
+/* HEADER */
+
+.header {
+  min-height:82px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 3%;
+  gap:20px;
+  box-shadow:0 2px 14px #10264a0c;
+}
+
+.brand {
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo {
+  font-size:40px;
+  color:var(--gold);
+}
+
+.brand h2 {
+  font-size:25px;
+  margin:0;
+  color:var(--navy);
+}
+
+.brand small {
+  display:block;
+  color:#596780;
+  font-weight:bold;
+}
+
+.nav {
+  display:flex;
+  gap:30px;
+  align-items:center;
+}
+
+.nav a {
+  text-decoration:none;
+  font-size:15px;
+  font-weight:bold;
+  padding:12px 0;
+  border-bottom:4px solid transparent;
+}
+
+.nav a:hover {
+  border-color:var(--gold);
+}
+
+.app-button {
+  background:var(--navy);
+  color:white;
+  padding:13px 20px;
+  border-radius:30px;
+  text-decoration:none;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+/* HERO */
+
+.hero {
+  min-height:270px;
+  position:relative;
+  overflow:hidden;
+  color:white;
+  background:
+  linear-gradient(90deg,
+    rgba(4,24,55,.10),
+    rgba(5,28,65,.55) 45%,
+    #061f49 75%),
+  url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1900&q=85')
+  center/cover no-repeat;
+}
+
+.hero-content {
+  max-width:1450px;
+  margin:auto;
+  min-height:270px;
+  padding:30px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+}
+
+.hero-text {
+  width:55%;
+  text-align:right;
+}
+
+.hero h1 {
+  font-size:49px;
+  margin:0 0 8px;
+  font-weight:900;
+}
+
+.hero h2 {
+  font-size:27px;
+  margin:0 0 8px;
+}
+
+.hero h2 span {
+  color:var(--gold);
+}
+
+.hero p {
+  font-size:16px;
+  margin:0 0 18px;
+}
+
+.search {
+  height:54px;
+  max-width:760px;
+  display:flex;
+  background:white;
+  border-radius:35px;
+  padding:4px;
+}
+
+.search input {
+  flex:1;
+  min-width:0;
+  border:0;
+  outline:0;
+  padding:0 20px;
+  font:15px Tahoma;
+}
+
+.search button {
+  background:var(--gold);
+  color:white;
+  border:0;
+  border-radius:30px;
+  padding:0 30px;
+  font:bold 16px Tahoma;
+  cursor:pointer;
+}
+
+/* CATEGORIES */
+
+.categories {
+  max-width:1450px;
+  margin:13px auto;
+  padding:0 20px;
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:9px;
+}
+
+.category {
+  background:#e9edf7;
+  border:1px solid #e2e7f0;
+  min-height:96px;
+  border-radius:16px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  text-align:center;
+  text-decoration:none;
+  color:var(--navy);
+  font-weight:900;
+  font-size:14px;
+  transition:.2s;
+}
+
+.category .icon {
+  font-size:30px;
+}
+
+.category:hover,
+.category.active {
+  background:var(--navy);
+  color:white;
+  border-color:var(--navy);
+  box-shadow:inset 0 -5px var(--gold);
+}
+
+/* NOTICE */
+
+.notice {
+  max-width:1450px;
+  margin:15px auto;
+  padding:0 20px;
+}
+
+.notice-content {
+  min-height:70px;
+  background:#e7efff;
+  border:1px solid #6c91d2;
+  border-radius:16px;
+  padding:12px 18px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  color:var(--navy);
+  font-size:15px;
+  line-height:1.9;
+  font-weight:bold;
+}
+
+.notice-title {
+  background:var(--navy);
+  color:white;
+  padding:10px 22px;
+  border-radius:30px;
+  white-space:nowrap;
+  font-size:17px;
+}
+
+.notice strong {
+  color:#b62828;
+}
+
+/* AUCTIONS */
+
+.main {
+  max-width:1450px;
+  margin:15px auto;
+  padding:0 20px 30px;
+}
+
+.section-title {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:15px 0;
+}
+
+.section-title h2 {
+  color:var(--navy);
+  font-size:27px;
+  margin:0;
+  border-bottom:4px solid var(--gold);
+  padding-bottom:7px;
+}
+
+.all-link {
+  text-decoration:none;
+  border:1px solid var(--navy);
+  border-radius:30px;
+  padding:10px 20px;
+  font-weight:bold;
+  font-size:14px;
+}
+
+.auctions {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+}
+
+.empty {
+  grid-column:1/-1;
+  background:white;
+  border:1px solid #e2e7f0;
+  border-radius:15px;
+  text-align:center;
+  padding:40px 20px;
+}
+
+.empty h3 {
+  color:var(--navy);
+}
+
+.empty p {
+  color:#66748b;
+  line-height:1.9;
+}
+
+/* FEATURES */
+
+.features {
+  max-width:1450px;
+  margin:20px auto 30px;
+  padding:0 20px;
+}
+
+.features-inner {
+  background:#e9edf7;
+  border-radius:45px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:18px 10px;
+}
+
+.feature {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  padding:10px;
+  text-align:center;
+  font-weight:bold;
+  color:var(--navy);
+  font-size:14px;
+}
+
+.feature + .feature {
+  border-right:1px solid #aab5c9;
+}
+
+.feature-icon {
+  font-size:26px;
+}
+
+/* INFORMATION */
+
+.information {
+  max-width:1150px;
+  margin:30px auto;
+  padding:0 20px;
+}
+
+.info-card {
+  background:white;
+  border:1px solid #e2e7f0;
+  border-radius:15px;
+  padding:25px;
+  margin-bottom:15px;
+  line-height:2;
+}
+
+.info-card h2 {
+  color:var(--navy);
+  font-size:22px;
+}
+
+.info-card p {
+  color:#53627a;
+  font-size:14px;
+}
+
+/* FOOTER */
+
+.footer {
+  background:var(--navy);
+  color:white;
+  text-align:center;
+  padding:30px 20px;
+  line-height:2;
+}
+
+.footer h2 {
+  margin:0;
+}
+
+.footer-links {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:20px;
+  margin:15px 0;
+}
+
+.footer-links a {
+  color:#e8eef8;
+  text-decoration:none;
+  font-size:13px;
+}
+
+.footer-links a:hover {
+  color:var(--gold);
+}
+
+.copyright {
+  color:#bdc9da;
+  font-size:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:1050px) {
+  .nav {
+    gap:15px;
+  }
+
+  .categories {
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .auctions {
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:700px) {
+
+  .header {
+    flex-wrap:wrap;
+    padding:10px 15px;
+  }
+
+  .brand h2 {
+    font-size:20px;
+  }
+
+  .logo {
+    font-size:30px;
+  }
+
+  .nav {
+    order:3;
+    width:100%;
+    justify-content:space-between;
+    gap:8px;
+    overflow-x:auto;
+  }
+
+  .nav a {
+    font-size:11px;
+    white-space:nowrap;
+  }
+
+  .app-button {
+    font-size:11px;
+    padding:10px;
+  }
+
+  .hero {
+    min-height:300px;
+    background-position:center;
+  }
+
+  .hero-content {
+    min-height:300px;
+    padding:20px;
+    justify-content:center;
+    background:rgba(5,28,65,.65);
+  }
+
+  .hero-text {
+    width:100%;
+    text-align:center;
+  }
+
+  .hero h1 {
+    font-size:32px;
+  }
+
+  .hero h2 {
+    font-size:20px;
+  }
+
+  .hero p {
+    font-size:13px;
+  }
+
+  .search {
+    height:49px;
+  }
+
+  .search input {
+    font-size:12px;
+    padding:0 10px;
+  }
+
+  .search button {
+    padding:0 18px;
+    font-size:13px;
+  }
+
+  .categories {
+    grid-template-columns:repeat(2,1fr);
+    padding:0 12px;
+  }
+
+  .category {
+    min-height:82px;
+    font-size:13px;
+  }
+
+  .category .icon {
+    font-size:25px;
+  }
+
+  .notice {
+    padding:0 12px;
+  }
+
+  .notice-content {
+    display:block;
+    text-align:center;
+    font-size:12px;
+  }
+
+  .notice-title {
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  .main {
+    padding:0 12px 20px;
+  }
+
+  .section-title h2 {
+    font-size:21px;
+  }
+
+  .auctions {
+    grid-template-columns:1fr;
+  }
+
+  .features {
+    padding:0 12px;
+  }
+
+  .features-inner {
+    grid-template-columns:repeat(2,1fr);
+    border-radius:20px;
+  }
+
+  .feature {
+    font-size:12px;
+  }
+
+  .feature:nth-child(3) {
+    border-right:0;
+  }
+
+  .information {
+    padding:0 12px;
+  }
+
+}
 </style>
 </head>
+
 <body>
-<header>
-<nav>
-<div class="logo">مرصد <span>المزادات</span></div>
-<div>
+
+<!-- HEADER -->
+
+<header class="header">
+
+<a href="#home" class="brand">
+<span class="logo">⚖</span>
+<span>
+<h2>مرصد المزادات</h2>
+<small>كل المزادات .. في مكان واحد</small>
+</span>
+</a>
+
+<nav class="nav">
 <a href="#home">الرئيسية</a>
-<a href="#auctions">المزادات</a>
+<a href="#auctions">جميع المزادات</a>
 <a href="#about">عن المنصة</a>
-</div>
+<a href="#faq">الأسئلة الشائعة</a>
+<a href="#contact">تواصل معنا</a>
 </nav>
+
+<a href="#about" class="app-button">↓ تطبيق الجوال ▣</a>
+
 </header>
 
+<!-- HERO -->
+
 <section class="hero" id="home">
-<h1>كل المزادات.. في مكان واحد</h1>
-<p>اكتشف المزادات المتاحة في السعودية وتابعها من مصادرها الرسمية</p>
-<div class="search">
-<input id="searchInput" type="search" placeholder="ابحث عن مزاد أو سيارة أو عقار...">
-<button onclick="searchAuctions()">بحث</button>
+
+<div class="hero-content">
+
+<div class="hero-text">
+
+<h1>مرصد المزادات</h1>
+
+<h2>
+كل المزادات .. 
+<span>في مكان واحد</span>
+</h2>
+
+<p>
+منصة إعلانية وتجميعية لعرض المزادات المتاحة في السعودية
+</p>
+
+<form class="search" id="searchForm">
+
+<input
+type="search"
+id="searchInput"
+placeholder="ابحث عن مزاد ..."
+aria-label="ابحث عن مزاد"
+>
+
+<button type="submit">بحث　⌕</button>
+
+</form>
+
+</div>
 </div>
 </section>
 
-<main class="container" id="auctions">
-<div class="section-head">
-<h2>أحدث المزادات</h2>
-<span style="font-size:13px;color:#818995">تابع الفرص الجديدة من مصادرها</span>
+<!-- CATEGORIES -->
+
+<nav class="categories">
+
+<a class="category active" href="#auctions" data-category="السيارات">
+<span class="icon">🚘</span>
+<span>السيارات والمركبات</span>
+</a>
+
+<a class="category" href="#auctions" data-category="العقارات">
+<span class="icon">⌂</span>
+<span>العقارات</span>
+</a>
+
+<a class="category" href="#auctions" data-category="المعدات">
+<span class="icon">🚜</span>
+<span>المعدات والآليات</span>
+</a>
+
+<a class="category" href="#auctions" data-category="الشركات">
+<span class="icon">▦</span>
+<span>الشركات والتصفيات</span>
+</a>
+
+<a class="category" href="#auctions" data-category="السكراب">
+<span class="icon">♻</span>
+<span>السكراب والخردة</span>
+</a>
+
+<a class="category" href="#auctions" data-category="الأثاث">
+<span class="icon">🛋</span>
+<span>الأثاث والأجهزة</span>
+</a>
+
+<a class="category" href="#auctions" data-category="المواشي">
+<span class="icon">🐪</span>
+<span>المواشي</span>
+</a>
+
+</nav>
+
+<!-- NOTICE -->
+
+<section class="notice">
+
+<div class="notice-content">
+
+<span class="notice-title">📢 تنويه مهم</span>
+
+<span>
+مرصد المزادات منصة إعلانية وتجميعية لعرض المزادات المتاحة في السعودية،
+<strong>ولا ينظم المزادات</strong>
+أو يستقبل المزايدات أو عمليات البيع والشراء.
+تتم المشاركة في المزادات عبر الجهات والمنصات المنظمة لها.
+</span>
+
 </div>
 
-<div class="filters">
-<button class="active" onclick="setFilter(this,'الكل')">جميع المزادات</button>
-<button onclick="setFilter(this,'سيارات')">سيارات</button>
-<button onclick="setFilter(this,'عقارات')">عقارات</button>
-<button onclick="setFilter(this,'منوعات')">منوعات</button>
+</section>
+
+<!-- AUCTIONS -->
+
+<main class="main" id="auctions">
+
+<div class="section-title">
+
+<h2>أحدث المزادات</h2>
+
+<a href="#auctions" class="all-link">عرض الكل　‹</a>
+
 </div>
+
+<div class="auctions" id="auctionGrid">
 
 <div class="empty">
-<div class="symbol">⌕</div>
-<h3>نعمل على تجهيز المزادات</h3>
-<p>نعمل على جمع المزادات والتحقق من مصادرها.<br>ستظهر الإعلانات الجديدة هنا عند توفرها.</p>
+
+<div style="font-size:40px;color:#f2b51b">⌕</div>
+
+<h3>نعمل على تجهيز دليل المزادات</h3>
+
+<p>
+ستظهر هنا المزادات بعد إضافتها والتحقق من بياناتها
+وروابط مصادرها الأصلية.
+لا توجد مزادات منشورة حاليًا.
+</p>
+
 </div>
 
-<section class="notice" id="about">
-<strong>تنويه مهم:</strong><br>
-مرصد المزادات منصة إعلانية وتجميعية لعرض المزادات المتاحة في السعودية، ولا ينظم المزادات أو يستقبل المزايدات أو عمليات البيع والشراء. تتم المشاركة في المزادات عبر الجهات والمنصات المنظمة لها.
-</section>
+</div>
+
 </main>
 
-<footer>
-<strong>مرصد المزادات</strong><br>
-كل المزادات.. في مكان واحد<br>
+<!-- FEATURES -->
+
+<section class="features">
+
+<div class="features-inner">
+
+<div class="feature">
+<span class="feature-icon">🛡</span>
+<span>معلومات موثوقة ومحدثة</span>
+</div>
+
+<div class="feature">
+<span class="feature-icon">⚡</span>
+<span>تنبيهات للمزادات الجديدة</span>
+</div>
+
+<div class="feature">
+<span class="feature-icon">📍</span>
+<span>تغطية شاملة لجميع مناطق المملكة</span>
+</div>
+
+<div class="feature">
+<span class="feature-icon">🎧</span>
+<span>دعم ومساعدة</span>
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section class="information">
+
+<div class="info-card" id="about">
+
+<h2>عن مرصد المزادات</h2>
+
+<p>
+مرصد المزادات دليل إلكتروني مستقل يهدف إلى تسهيل الوصول إلى إعلانات المزادات المتاحة في المملكة العربية السعودية، من خلال جمع روابط الإعلانات وتصنيفها بحسب نوع الأصل والجهة المنظمة والمدينة وتاريخ المزاد.
+</p>
+
+<p>
+هدفنا مساعدة الزائر على اكتشاف الفرص والوصول إلى المصدر الأصلي للمعلومة بسهولة.
+</p>
+
+<p>
+مرصد المزادات ليس جهة تنظيم مزادات ولا وسيط بيع أو شراء، ولا يستقبل عروض الأسعار أو المدفوعات أو تسجيل المزايدين.
+</p>
+
+</div>
+
+<!-- FAQ -->
+
+<div class="info-card" id="faq">
+
+<h2>الأسئلة الشائعة</h2>
+
+<h3>هل ينظم مرصد المزادات المزادات؟</h3>
+
+<p>
+لا، المنصة دليل تجميعي وإعلاني فقط، والمشاركة تتم من خلال الجهة المنظمة أو منصتها الرسمية.
+</p>
+
+<h3>كيف أشارك في مزاد؟</h3>
+
+<p>
+افتح إعلان المزاد واتبع رابط المصدر الأصلي، ثم راجع شروط التسجيل والسداد والمعاينة لدى الجهة المنظمة مباشرة.
+</p>
+
+<h3>هل بيانات المزادات نهائية؟</h3>
+
+<p>
+قد تتغير المواعيد أو الشروط لدى الجهة المنظمة؛ لذلك تحقق دائمًا من المصدر الرسمي قبل اتخاذ أي قرار.
+</p>
+
+</div>
+
+<!-- CONTACT -->
+
+<div class="info-card" id="contact">
+
+<h2>تواصل معنا</h2>
+
+<p>
+للاستفسارات أو الإبلاغ عن رابط مزاد غير صحيح أو طلب تحديث بيانات منشورة، يمكن التواصل مع إدارة مرصد المزادات عبر قناة التواصل التي سيتم الإعلان عنها في هذه الصفحة.
+</p>
+
+</div>
+
+<!-- PRIVACY -->
+
+<div class="info-card" id="privacy">
+
+<h2>سياسة الخصوصية</h2>
+
+<p>
+نحترم خصوصية زوار مرصد المزادات. قد تُجمع معلومات تقنية أساسية مثل نوع المتصفح والصفحات التي تتم زيارتها ووقت الزيارة، وذلك لأغراض تشغيل الموقع وتحسينه وقياس الأداء.
+</p>
+
+<p>
+قد يستخدم الموقع ملفات تعريف الارتباط وتقنيات مشابهة لتذكر التفضيلات وتحليل الاستخدام.
+</p>
+
+<p>
+قد تستخدم خدمات الجهات الخارجية، بما فيها Google عند تفعيل الإعلانات، ملفات تعريف الارتباط لعرض الإعلانات وقياس أدائها وفق إعدادات المستخدم وسياسات تلك الجهات.
+</p>
+
+<p>
+لا يطلب الموقع من الزائر بيانات الدفع للمشاركة في المزادات؛ تتم أي إجراءات تسجيل أو دفع لدى الجهة المنظمة للمزاد وعلى مسؤوليتها.
+</p>
+
+<p>
+قد يتم تحديث هذه السياسة عند تطوير الخدمات أو إضافة أدوات جديدة.
+</p>
+
+</div>
+
+<!-- TERMS -->
+
+<div class="info-card" id="terms">
+
+<h2>الشروط وإخلاء المسؤولية</h2>
+
+<p>
+المعلومات والروابط المنشورة في مرصد المزادات لأغراض التعريف والإرشاد فقط.
+نسعى إلى عرض بيانات دقيقة وتحديثها، لكننا لا نضمن اكتمالها أو استمرار توفر المزاد أو صحة كل تفصيل يرد في المصدر الخارجي.
+</p>
+
+<p>
+على المستخدم التحقق من تفاصيل المزاد ومواعيده وشروطه ورسومه وحالة الأصل مباشرة من الجهة المنظمة قبل التسجيل أو اتخاذ قرار.
+</p>
+
+<p>
+لا يتحمل مرصد المزادات مسؤولية نتائج المشاركة أو التعاملات التي تتم بين المستخدم والجهات الخارجية.
+</p>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<h2>مرصد المزادات</h2>
+
+<div>كل المزادات .. في مكان واحد</div>
+
+<div class="footer-links">
+
+<a href="#about">عن المنصة</a>
+
+<a href="#faq">الأسئلة الشائعة</a>
+
+<a href="#contact">تواصل معنا</a>
+
+<a href="#privacy">سياسة الخصوصية</a>
+
+<a href="#terms">الشروط وإخلاء المسؤولية</a>
+
+</div>
+
+<div class="copyright">
 © <span id="year"></span> مرصد المزادات - جميع الحقوق محفوظة
+</div>
+
 </footer>
 
 <script>
-document.getElementById("year").textContent=new Date().getFullYear();
-function searchAuctions(){
-const value=document.getElementById("searchInput").value.trim();
-if(value) alert("سيتم تفعيل البحث عند ربط قاعدة بيانات المزادات.");
+
+document.getElementById("year").textContent =
+new Date().getFullYear();
+
+function escapeHTML(value) {
+return value.replace(/[&<>"']/g, function(char) {
+return {
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[char];
+});
 }
-function setFilter(button,category){
-document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
-button.classList.add("active");
-}
+
+document.getElementById("searchForm").addEventListener("submit", function(event) {
+
+event.preventDefault();
+
+const query =
+document.getElementById("searchInput").value.trim();
+
+const grid =
+document.getElementById("auctionGrid");
+
+grid.innerHTML = `
+<div class="empty">
+<div style="font-size:40px;color:#f2b51b">⌕</div>
+<h3>
+${query ? "لا توجد نتائج منشورة عن: " + escapeHTML(query) : "لا توجد مزادات منشورة حاليًا"}
+</h3>
+<p>
+سيظهر البحث هنا عند توفر مزادات موثقة ومضافة إلى الدليل.
+</p>
+</div>
+`;
+
+document.getElementById("auctions").scrollIntoView({
+behavior:"smooth"
+});
+
+});
+
+document.querySelectorAll(".category").forEach(function(category) {
+
+category.addEventListener("click", function() {
+
+document.querySelectorAll(".category").forEach(function(item) {
+item.classList.remove("active");
+});
+
+this.classList.add("active");
+
+});
+
+});
+
 </script>
+
 </body>
 </html>
-
