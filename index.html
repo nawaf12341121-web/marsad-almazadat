@@ -5,590 +5,97 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#062653">
-
-<meta name="description" content="مرصد المزادات منصة سعودية مستقلة تجمع إعلانات وروابط المزادات في مكان واحد. اكتشف مزادات السيارات والعقارات والمعدات والمواشي وغيرها.">
-
+<meta name="description" content="مرصد المزادات منصة سعودية تجمع إعلانات وروابط المزادات في مكان واحد. اكتشف مزادات السيارات والعقارات والمعدات وغيرها.">
 <meta name="robots" content="index,follow">
 <title>مرصد المزادات | كل المزادات في مكان واحد</title>
 
 <style>
-:root {
-  --navy:#062653;
-  --navy2:#0b3269;
-  --gold:#f2b51b;
-  --bg:#f4f6fb;
-  --ink:#10264a;
-  --white:#fff;
-}
-
-* {
-  box-sizing:border-box;
-}
-
-html {
-  scroll-behavior:smooth;
-}
-
-body {
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:Tahoma,Arial,sans-serif;
-}
-
-a {
-  color:inherit;
-}
-
-/* HEADER */
-
-.header {
-  min-height:82px;
-  background:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:12px 3%;
-  gap:20px;
-  box-shadow:0 2px 14px #10264a0c;
-}
-
-.brand {
-  text-decoration:none;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.logo {
-  font-size:40px;
-  color:var(--gold);
-}
-
-.brand h2 {
-  font-size:25px;
-  margin:0;
-  color:var(--navy);
-}
-
-.brand small {
-  display:block;
-  color:#596780;
-  font-weight:bold;
-}
-
-.nav {
-  display:flex;
-  gap:30px;
-  align-items:center;
-}
-
-.nav a {
-  text-decoration:none;
-  font-size:15px;
-  font-weight:bold;
-  padding:12px 0;
-  border-bottom:4px solid transparent;
-}
-
-.nav a:hover {
-  border-color:var(--gold);
-}
-
-.app-button {
-  background:var(--navy);
-  color:white;
-  padding:13px 20px;
-  border-radius:30px;
-  text-decoration:none;
-  font-weight:bold;
-  white-space:nowrap;
-}
-
-/* HERO */
-
-.hero {
-  min-height:270px;
-  position:relative;
-  overflow:hidden;
-  color:white;
-  background:
-  linear-gradient(90deg,
-    rgba(4,24,55,.10),
-    rgba(5,28,65,.55) 45%,
-    #061f49 75%),
-  url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1900&q=85')
-  center/cover no-repeat;
-}
-
-.hero-content {
-  max-width:1450px;
-  margin:auto;
-  min-height:270px;
-  padding:30px;
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-}
-
-.hero-text {
-  width:55%;
-  text-align:right;
-}
-
-.hero h1 {
-  font-size:49px;
-  margin:0 0 8px;
-  font-weight:900;
-}
-
-.hero h2 {
-  font-size:27px;
-  margin:0 0 8px;
-}
-
-.hero h2 span {
-  color:var(--gold);
-}
-
-.hero p {
-  font-size:16px;
-  margin:0 0 18px;
-}
-
-.search {
-  height:54px;
-  max-width:760px;
-  display:flex;
-  background:white;
-  border-radius:35px;
-  padding:4px;
-}
-
-.search input {
-  flex:1;
-  min-width:0;
-  border:0;
-  outline:0;
-  padding:0 20px;
-  font:15px Tahoma;
-}
-
-.search button {
-  background:var(--gold);
-  color:white;
-  border:0;
-  border-radius:30px;
-  padding:0 30px;
-  font:bold 16px Tahoma;
-  cursor:pointer;
-}
-
-/* CATEGORIES */
-
-.categories {
-  max-width:1450px;
-  margin:13px auto;
-  padding:0 20px;
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:9px;
-}
-
-.category {
-  background:#e9edf7;
-  border:1px solid #e2e7f0;
-  min-height:96px;
-  border-radius:16px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:8px;
-  text-align:center;
-  text-decoration:none;
-  color:var(--navy);
-  font-weight:900;
-  font-size:14px;
-  transition:.2s;
-}
-
-.category .icon {
-  font-size:30px;
-}
-
-.category:hover,
-.category.active {
-  background:var(--navy);
-  color:white;
-  border-color:var(--navy);
-  box-shadow:inset 0 -5px var(--gold);
-}
-
-/* NOTICE */
-
-.notice {
-  max-width:1450px;
-  margin:15px auto;
-  padding:0 20px;
-}
-
-.notice-content {
-  min-height:70px;
-  background:#e7efff;
-  border:1px solid #6c91d2;
-  border-radius:16px;
-  padding:12px 18px;
-  display:flex;
-  align-items:center;
-  gap:20px;
-  color:var(--navy);
-  font-size:15px;
-  line-height:1.9;
-  font-weight:bold;
-}
-
-.notice-title {
-  background:var(--navy);
-  color:white;
-  padding:10px 22px;
-  border-radius:30px;
-  white-space:nowrap;
-  font-size:17px;
-}
-
-.notice strong {
-  color:#b62828;
-}
-
-/* AUCTIONS */
-
-.main {
-  max-width:1450px;
-  margin:15px auto;
-  padding:0 20px 30px;
-}
-
-.section-title {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:15px 0;
-}
-
-.section-title h2 {
-  color:var(--navy);
-  font-size:27px;
-  margin:0;
-  border-bottom:4px solid var(--gold);
-  padding-bottom:7px;
-}
-
-.all-link {
-  text-decoration:none;
-  border:1px solid var(--navy);
-  border-radius:30px;
-  padding:10px 20px;
-  font-weight:bold;
-  font-size:14px;
-}
-
-.auctions {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
-}
-
-.empty {
-  grid-column:1/-1;
-  background:white;
-  border:1px solid #e2e7f0;
-  border-radius:15px;
-  text-align:center;
-  padding:40px 20px;
-}
-
-.empty h3 {
-  color:var(--navy);
-}
-
-.empty p {
-  color:#66748b;
-  line-height:1.9;
-}
-
-/* FEATURES */
-
-.features {
-  max-width:1450px;
-  margin:20px auto 30px;
-  padding:0 20px;
-}
-
-.features-inner {
-  background:#e9edf7;
-  border-radius:45px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  padding:18px 10px;
-}
-
-.feature {
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:12px;
-  padding:10px;
-  text-align:center;
-  font-weight:bold;
-  color:var(--navy);
-  font-size:14px;
-}
-
-.feature + .feature {
-  border-right:1px solid #aab5c9;
-}
-
-.feature-icon {
-  font-size:26px;
-}
-
-/* INFORMATION */
-
-.information {
-  max-width:1150px;
-  margin:30px auto;
-  padding:0 20px;
-}
-
-.info-card {
-  background:white;
-  border:1px solid #e2e7f0;
-  border-radius:15px;
-  padding:25px;
-  margin-bottom:15px;
-  line-height:2;
-}
-
-.info-card h2 {
-  color:var(--navy);
-  font-size:22px;
-}
-
-.info-card p {
-  color:#53627a;
-  font-size:14px;
-}
-
-/* FOOTER */
-
-.footer {
-  background:var(--navy);
-  color:white;
-  text-align:center;
-  padding:30px 20px;
-  line-height:2;
-}
-
-.footer h2 {
-  margin:0;
-}
-
-.footer-links {
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:20px;
-  margin:15px 0;
-}
-
-.footer-links a {
-  color:#e8eef8;
-  text-decoration:none;
-  font-size:13px;
-}
-
-.footer-links a:hover {
-  color:var(--gold);
-}
-
-.copyright {
-  color:#bdc9da;
-  font-size:12px;
-}
-
-/* MOBILE */
-
-@media(max-width:1050px) {
-  .nav {
-    gap:15px;
-  }
-
-  .categories {
-    grid-template-columns:repeat(4,1fr);
-  }
-
-  .auctions {
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-
-@media(max-width:700px) {
-
-  .header {
-    flex-wrap:wrap;
-    padding:10px 15px;
-  }
-
-  .brand h2 {
-    font-size:20px;
-  }
-
-  .logo {
-    font-size:30px;
-  }
-
-  .nav {
-    order:3;
-    width:100%;
-    justify-content:space-between;
-    gap:8px;
-    overflow-x:auto;
-  }
-
-  .nav a {
-    font-size:11px;
-    white-space:nowrap;
-  }
-
-  .app-button {
-    font-size:11px;
-    padding:10px;
-  }
-
-  .hero {
-    min-height:300px;
-    background-position:center;
-  }
-
-  .hero-content {
-    min-height:300px;
-    padding:20px;
-    justify-content:center;
-    background:rgba(5,28,65,.65);
-  }
-
-  .hero-text {
-    width:100%;
-    text-align:center;
-  }
-
-  .hero h1 {
-    font-size:32px;
-  }
-
-  .hero h2 {
-    font-size:20px;
-  }
-
-  .hero p {
-    font-size:13px;
-  }
-
-  .search {
-    height:49px;
-  }
-
-  .search input {
-    font-size:12px;
-    padding:0 10px;
-  }
-
-  .search button {
-    padding:0 18px;
-    font-size:13px;
-  }
-
-  .categories {
-    grid-template-columns:repeat(2,1fr);
-    padding:0 12px;
-  }
-
-  .category {
-    min-height:82px;
-    font-size:13px;
-  }
-
-  .category .icon {
-    font-size:25px;
-  }
-
-  .notice {
-    padding:0 12px;
-  }
-
-  .notice-content {
-    display:block;
-    text-align:center;
-    font-size:12px;
-  }
-
-  .notice-title {
-    display:inline-block;
-    margin-bottom:8px;
-  }
-
-  .main {
-    padding:0 12px 20px;
-  }
-
-  .section-title h2 {
-    font-size:21px;
-  }
-
-  .auctions {
-    grid-template-columns:1fr;
-  }
-
-  .features {
-    padding:0 12px;
-  }
-
-  .features-inner {
-    grid-template-columns:repeat(2,1fr);
-    border-radius:20px;
-  }
-
-  .feature {
-    font-size:12px;
-  }
-
-  .feature:nth-child(3) {
-    border-right:0;
-  }
-
-  .information {
-    padding:0 12px;
-  }
-
+:root{--navy:#062653;--navy2:#0b3269;--gold:#f2b51b;--bg:#f4f6fb;--ink:#10264a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}
+a{color:inherit}
+.header{min-height:82px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:12px 3%;gap:20px;box-shadow:0 2px 14px #10264a0c}
+.brand{text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo{font-size:40px;color:var(--gold)}
+.brand h2{font-size:25px;margin:0;color:var(--navy)}
+.brand small{display:block;color:#596780;font-weight:bold}
+.nav{display:flex;gap:30px;align-items:center}
+.nav a{text-decoration:none;font-size:15px;font-weight:bold;padding:12px 0;border-bottom:4px solid transparent}
+.nav a:hover{border-color:var(--gold)}
+.app-button{background:var(--navy);color:white;padding:13px 20px;border-radius:30px;text-decoration:none;font-weight:bold;white-space:nowrap}
+.hero{min-height:270px;position:relative;overflow:hidden;color:white;background:linear-gradient(90deg,rgba(4,24,55,.1),rgba(5,28,65,.55) 45%,#061f49 75%),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1900&q=85') center/cover no-repeat}
+.hero-content{max-width:1450px;margin:auto;min-height:270px;padding:30px;display:flex;align-items:center;justify-content:flex-end}
+.hero-text{width:55%;text-align:right}
+.hero h1{font-size:49px;margin:0 0 8px;font-weight:900}
+.hero h2{font-size:27px;margin:0 0 8px}
+.hero h2 span{color:var(--gold)}
+.hero p{font-size:16px;margin:0 0 18px}
+.search{height:54px;max-width:760px;display:flex;background:white;border-radius:35px;padding:4px}
+.search input{flex:1;min-width:0;border:0;outline:0;padding:0 20px;font:15px Tahoma}
+.search button{background:var(--gold);color:white;border:0;border-radius:30px;padding:0 30px;font:bold 16px Tahoma;cursor:pointer}
+.categories{max-width:1450px;margin:13px auto;padding:0 20px;display:grid;grid-template-columns:repeat(7,1fr);gap:9px}
+.category{background:#e9edf7;border:1px solid #e2e7f0;min-height:96px;border-radius:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;text-align:center;text-decoration:none;color:var(--navy);font-weight:900;font-size:14px;transition:.2s}
+.category .icon{font-size:30px}
+.category:hover,.category.active{background:var(--navy);color:white;border-color:var(--navy);box-shadow:inset 0 -5px var(--gold)}
+.notice{max-width:1450px;margin:15px auto;padding:0 20px}
+.notice-content{min-height:70px;background:#e7efff;border:1px solid #6c91d2;border-radius:16px;padding:12px 18px;display:flex;align-items:center;gap:20px;color:var(--navy);font-size:15px;line-height:1.9;font-weight:bold}
+.notice-title{background:var(--navy);color:white;padding:10px 22px;border-radius:30px;white-space:nowrap;font-size:17px}
+.notice strong{color:#b62828}
+.main{max-width:1450px;margin:15px auto;padding:0 20px 30px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:15px 0}
+.section-title h2{color:var(--navy);font-size:27px;margin:0;border-bottom:4px solid var(--gold);padding-bottom:7px}
+.all-link{text-decoration:none;border:1px solid var(--navy);border-radius:30px;padding:10px 20px;font-weight:bold;font-size:14px}
+.auctions{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.auction-card{background:#fff;border:1px solid #e2e7f0;border-radius:15px;padding:18px;display:flex;flex-direction:column;gap:11px;box-shadow:0 3px 12px #10264a08}
+.auction-card h3{color:var(--navy);font-size:18px;margin:0;line-height:1.7}
+.auction-card p{color:#66748b;font-size:13px;line-height:1.8;margin:0}
+.auction-meta{display:flex;flex-wrap:wrap;gap:7px;color:#596780;font-size:12px}
+.auction-tag{background:#e9edf7;color:var(--navy);border-radius:20px;padding:6px 10px}
+.auction-status{font-weight:bold;color:#177245}
+.auction-link{display:block;text-align:center;text-decoration:none;background:var(--navy);color:#fff;border-radius:25px;padding:11px;margin-top:auto;font-weight:bold}
+.auction-link:hover{background:var(--navy2)}
+.empty{grid-column:1/-1;background:white;border:1px solid #e2e7f0;border-radius:15px;text-align:center;padding:40px 20px}
+.empty h3{color:var(--navy)}
+.empty p{color:#66748b;line-height:1.9}
+.features{max-width:1450px;margin:20px auto 30px;padding:0 20px}
+.features-inner{background:#e9edf7;border-radius:45px;display:grid;grid-template-columns:repeat(4,1fr);padding:18px 10px}
+.feature{display:flex;justify-content:center;align-items:center;gap:12px;padding:10px;text-align:center;font-weight:bold;color:var(--navy);font-size:14px}
+.feature+.feature{border-right:1px solid #aab5c9}
+.feature-icon{font-size:26px}
+.information{max-width:1150px;margin:30px auto;padding:0 20px}
+.info-card{background:white;border:1px solid #e2e7f0;border-radius:15px;padding:25px;margin-bottom:15px;line-height:2}
+.info-card h2{color:var(--navy);font-size:22px}
+.info-card p{color:#53627a;font-size:14px}
+.footer{background:var(--navy);color:white;text-align:center;padding:30px 20px;line-height:2}
+.footer h2{margin:0}
+.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin:15px 0}
+.footer-links a{color:#e8eef8;text-decoration:none;font-size:13px}
+.footer-links a:hover{color:var(--gold)}
+.copyright{color:#bdc9da;font-size:12px}
+@media(max-width:1050px){.nav{gap:15px}.categories{grid-template-columns:repeat(4,1fr)}.auctions{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){
+.header{flex-wrap:wrap;padding:10px 15px}.brand h2{font-size:20px}.logo{font-size:30px}
+.nav{order:3;width:100%;justify-content:space-between;gap:8px;overflow-x:auto}
+.nav a{font-size:11px;white-space:nowrap}.app-button{font-size:11px;padding:10px}
+.hero{min-height:300px;background-position:center}.hero-content{min-height:300px;padding:20px;justify-content:center;background:rgba(5,28,65,.65)}
+.hero-text{width:100%;text-align:center}.hero h1{font-size:32px}.hero h2{font-size:20px}.hero p{font-size:13px}
+.search{height:49px}.search input{font-size:12px;padding:0 10px}.search button{padding:0 18px;font-size:13px}
+.categories{grid-template-columns:repeat(2,1fr);padding:0 12px}.category{min-height:82px;font-size:13px}.category .icon{font-size:25px}
+.notice{padding:0 12px}.notice-content{display:block;text-align:center;font-size:12px}.notice-title{display:inline-block;margin-bottom:8px}
+.main{padding:0 12px 20px}.section-title h2{font-size:21px}.auctions{grid-template-columns:1fr}
+.features{padding:0 12px}.features-inner{grid-template-columns:repeat(2,1fr);border-radius:20px}
+.feature{font-size:12px}.feature:nth-child(3){border-right:0}.information{padding:0 12px}
 }
 </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
-
 <header class="header">
-
 <a href="#home" class="brand">
 <span class="logo">⚖</span>
-<span>
-<h2>مرصد المزادات</h2>
-<small>كل المزادات .. في مكان واحد</small>
-</span>
+<span><h2>مرصد المزادات</h2><small>كل المزادات .. في مكان واحد</small></span>
 </a>
-
 <nav class="nav">
 <a href="#home">الرئيسية</a>
 <a href="#auctions">جميع المزادات</a>
@@ -596,368 +103,292 @@ a {
 <a href="#faq">الأسئلة الشائعة</a>
 <a href="#contact">تواصل معنا</a>
 </nav>
-
 <a href="#about" class="app-button">↓ تطبيق الجوال ▣</a>
-
 </header>
 
-<!-- HERO -->
-
 <section class="hero" id="home">
-
 <div class="hero-content">
-
 <div class="hero-text">
-
 <h1>مرصد المزادات</h1>
-
-<h2>
-كل المزادات .. 
-<span>في مكان واحد</span>
-</h2>
-
-<p>
-منصة إعلانية وتجميعية لعرض المزادات المتاحة في السعودية
-</p>
-
+<h2>كل المزادات .. <span>في مكان واحد</span></h2>
+<p>منصة إعلانية وتجميعية لعرض المزادات المتاحة في السعودية</p>
 <form class="search" id="searchForm">
-
-<input
-type="search"
-id="searchInput"
-placeholder="ابحث عن مزاد ..."
-aria-label="ابحث عن مزاد"
->
-
+<input type="search" id="searchInput" placeholder="ابحث عن مزاد ..." aria-label="ابحث عن مزاد">
 <button type="submit">بحث　⌕</button>
-
 </form>
-
 </div>
 </div>
 </section>
-
-<!-- CATEGORIES -->
 
 <nav class="categories">
-
-<a class="category active" href="#auctions" data-category="السيارات">
-<span class="icon">🚘</span>
-<span>السيارات والمركبات</span>
-</a>
-
-<a class="category" href="#auctions" data-category="العقارات">
-<span class="icon">⌂</span>
-<span>العقارات</span>
-</a>
-
-<a class="category" href="#auctions" data-category="المعدات">
-<span class="icon">🚜</span>
-<span>المعدات والآليات</span>
-</a>
-
-<a class="category" href="#auctions" data-category="الشركات">
-<span class="icon">▦</span>
-<span>الشركات والتصفيات</span>
-</a>
-
-<a class="category" href="#auctions" data-category="السكراب">
-<span class="icon">♻</span>
-<span>السكراب والخردة</span>
-</a>
-
-<a class="category" href="#auctions" data-category="الأثاث">
-<span class="icon">🛋</span>
-<span>الأثاث والأجهزة</span>
-</a>
-
-<a class="category" href="#auctions" data-category="المواشي">
-<span class="icon">🐪</span>
-<span>المواشي</span>
-</a>
-
+<a class="category active" href="#auctions" data-category="الكل"><span class="icon">🌐</span><span>جميع المزادات</span></a>
+<a class="category" href="#auctions" data-category="السيارات"><span class="icon">🚘</span><span>السيارات والمركبات</span></a>
+<a class="category" href="#auctions" data-category="العقارات"><span class="icon">⌂</span><span>العقارات</span></a>
+<a class="category" href="#auctions" data-category="المعدات"><span class="icon">🚜</span><span>المعدات والآليات</span></a>
+<a class="category" href="#auctions" data-category="الشركات"><span class="icon">▦</span><span>الشركات والتصفيات</span></a>
+<a class="category" href="#auctions" data-category="السكراب"><span class="icon">♻</span><span>السكراب والخردة</span></a>
+<a class="category" href="#auctions" data-category="الأثاث"><span class="icon">🛋</span><span>الأثاث والأجهزة</span></a>
+<a class="category" href="#auctions" data-category="المواشي"><span class="icon">🐪</span><span>المواشي</span></a>
 </nav>
 
-<!-- NOTICE -->
-
 <section class="notice">
-
 <div class="notice-content">
-
 <span class="notice-title">📢 تنويه مهم</span>
-
-<span>
-مرصد المزادات منصة إعلانية وتجميعية لعرض المزادات المتاحة في السعودية،
-<strong>ولا ينظم المزادات</strong>
-أو يستقبل المزايدات أو عمليات البيع والشراء.
-تتم المشاركة في المزادات عبر الجهات والمنصات المنظمة لها.
-</span>
-
+<span>مرصد المزادات منصة إعلانية وتجميعية لعرض المزادات المتاحة في السعودية، <strong>ولا ينظم المزادات</strong> أو يستقبل المزايدات أو عمليات البيع والشراء. تتم المشاركة عبر الجهات والمنصات المنظمة لها.</span>
 </div>
-
 </section>
-
-<!-- AUCTIONS -->
 
 <main class="main" id="auctions">
-
 <div class="section-title">
-
 <h2>أحدث المزادات</h2>
-
-<a href="#auctions" class="all-link">عرض الكل　‹</a>
-
+<a href="#auctions" class="all-link" id="showAll">عرض الكل　‹</a>
 </div>
-
+<div id="connectionStatus" style="font-size:13px;color:#66748b;margin:10px 0">جارٍ الاتصال بقاعدة البيانات...</div>
 <div class="auctions" id="auctionGrid">
-
-<div class="empty">
-
-<div style="font-size:40px;color:#f2b51b">⌕</div>
-
-<h3>نعمل على تجهيز دليل المزادات</h3>
-
-<p>
-ستظهر هنا المزادات بعد إضافتها والتحقق من بياناتها
-وروابط مصادرها الأصلية.
-لا توجد مزادات منشورة حاليًا.
-</p>
-
+<div class="empty"><div style="font-size:40px;color:#f2b51b">⌕</div><h3>جارٍ تحميل المزادات</h3><p>نبحث عن المزادات المنشورة في المرصد.</p></div>
 </div>
-
-</div>
-
 </main>
 
-<!-- FEATURES -->
-
 <section class="features">
-
 <div class="features-inner">
-
-<div class="feature">
-<span class="feature-icon">🛡</span>
-<span>معلومات موثوقة ومحدثة</span>
+<div class="feature"><span class="feature-icon">🛡</span><span>معلومات موثوقة ومحدثة</span></div>
+<div class="feature"><span class="feature-icon">⚡</span><span>تنبيهات للمزادات الجديدة</span></div>
+<div class="feature"><span class="feature-icon">📍</span><span>تغطية شاملة لجميع مناطق المملكة</span></div>
+<div class="feature"><span class="feature-icon">🎧</span><span>دعم ومساعدة</span></div>
 </div>
-
-<div class="feature">
-<span class="feature-icon">⚡</span>
-<span>تنبيهات للمزادات الجديدة</span>
-</div>
-
-<div class="feature">
-<span class="feature-icon">📍</span>
-<span>تغطية شاملة لجميع مناطق المملكة</span>
-</div>
-
-<div class="feature">
-<span class="feature-icon">🎧</span>
-<span>دعم ومساعدة</span>
-</div>
-
-</div>
-
 </section>
-
-<!-- ABOUT -->
 
 <section class="information">
-
 <div class="info-card" id="about">
-
 <h2>عن مرصد المزادات</h2>
-
-<p>
-مرصد المزادات دليل إلكتروني مستقل يهدف إلى تسهيل الوصول إلى إعلانات المزادات المتاحة في المملكة العربية السعودية، من خلال جمع روابط الإعلانات وتصنيفها بحسب نوع الأصل والجهة المنظمة والمدينة وتاريخ المزاد.
-</p>
-
-<p>
-هدفنا مساعدة الزائر على اكتشاف الفرص والوصول إلى المصدر الأصلي للمعلومة بسهولة.
-</p>
-
-<p>
-مرصد المزادات ليس جهة تنظيم مزادات ولا وسيط بيع أو شراء، ولا يستقبل عروض الأسعار أو المدفوعات أو تسجيل المزايدين.
-</p>
-
+<p>مرصد المزادات دليل إلكتروني مستقل يهدف إلى تسهيل الوصول إلى إعلانات المزادات المتاحة في المملكة العربية السعودية، من خلال جمع روابط الإعلانات وتصنيفها بحسب نوع الأصل والجهة المنظمة والمدينة وتاريخ المزاد.</p>
+<p>هدفنا مساعدة الزائر على اكتشاف الفرص والوصول إلى المصدر الأصلي للمعلومة بسهولة.</p>
+<p>مرصد المزادات ليس جهة تنظيم مزادات ولا وسيط بيع أو شراء، ولا يستقبل عروض الأسعار أو المدفوعات أو تسجيل المزايدين.</p>
 </div>
-
-<!-- FAQ -->
 
 <div class="info-card" id="faq">
-
 <h2>الأسئلة الشائعة</h2>
-
 <h3>هل ينظم مرصد المزادات المزادات؟</h3>
-
-<p>
-لا، المنصة دليل تجميعي وإعلاني فقط، والمشاركة تتم من خلال الجهة المنظمة أو منصتها الرسمية.
-</p>
-
+<p>لا، المنصة دليل تجميعي وإعلاني فقط، والمشاركة تتم من خلال الجهة المنظمة أو منصتها الرسمية.</p>
 <h3>كيف أشارك في مزاد؟</h3>
-
-<p>
-افتح إعلان المزاد واتبع رابط المصدر الأصلي، ثم راجع شروط التسجيل والسداد والمعاينة لدى الجهة المنظمة مباشرة.
-</p>
-
+<p>افتح إعلان المزاد واتبع رابط المصدر الأصلي، ثم راجع شروط التسجيل والسداد والمعاينة لدى الجهة المنظمة مباشرة.</p>
 <h3>هل بيانات المزادات نهائية؟</h3>
-
-<p>
-قد تتغير المواعيد أو الشروط لدى الجهة المنظمة؛ لذلك تحقق دائمًا من المصدر الرسمي قبل اتخاذ أي قرار.
-</p>
-
+<p>قد تتغير المواعيد أو الشروط لدى الجهة المنظمة؛ لذلك تحقق دائمًا من المصدر الرسمي قبل اتخاذ أي قرار.</p>
 </div>
-
-<!-- CONTACT -->
 
 <div class="info-card" id="contact">
-
 <h2>تواصل معنا</h2>
-
-<p>
-للاستفسارات أو الإبلاغ عن رابط مزاد غير صحيح أو طلب تحديث بيانات منشورة، يمكن التواصل مع إدارة مرصد المزادات عبر قناة التواصل التي سيتم الإعلان عنها في هذه الصفحة.
-</p>
-
+<p>للاستفسارات أو الإبلاغ عن رابط مزاد غير صحيح أو طلب تحديث بيانات منشورة، يمكن التواصل مع إدارة مرصد المزادات عبر قناة التواصل التي سيتم الإعلان عنها في هذه الصفحة.</p>
 </div>
-
-<!-- PRIVACY -->
 
 <div class="info-card" id="privacy">
-
 <h2>سياسة الخصوصية</h2>
-
-<p>
-نحترم خصوصية زوار مرصد المزادات. قد تُجمع معلومات تقنية أساسية مثل نوع المتصفح والصفحات التي تتم زيارتها ووقت الزيارة، وذلك لأغراض تشغيل الموقع وتحسينه وقياس الأداء.
-</p>
-
-<p>
-قد يستخدم الموقع ملفات تعريف الارتباط وتقنيات مشابهة لتذكر التفضيلات وتحليل الاستخدام.
-</p>
-
-<p>
-قد تستخدم خدمات الجهات الخارجية، بما فيها Google عند تفعيل الإعلانات، ملفات تعريف الارتباط لعرض الإعلانات وقياس أدائها وفق إعدادات المستخدم وسياسات تلك الجهات.
-</p>
-
-<p>
-لا يطلب الموقع من الزائر بيانات الدفع للمشاركة في المزادات؛ تتم أي إجراءات تسجيل أو دفع لدى الجهة المنظمة للمزاد وعلى مسؤوليتها.
-</p>
-
-<p>
-قد يتم تحديث هذه السياسة عند تطوير الخدمات أو إضافة أدوات جديدة.
-</p>
-
+<p>نحترم خصوصية زوار مرصد المزادات. قد تُجمع معلومات تقنية أساسية مثل نوع المتصفح والصفحات التي تتم زيارتها ووقت الزيارة، وذلك لأغراض تشغيل الموقع وتحسينه وقياس الأداء.</p>
+<p>قد يستخدم الموقع ملفات تعريف الارتباط وتقنيات مشابهة لتذكر التفضيلات وتحليل الاستخدام.</p>
+<p>قد تستخدم خدمات الجهات الخارجية، بما فيها Google عند تفعيل الإعلانات، ملفات تعريف الارتباط لعرض الإعلانات وقياس أدائها وفق إعدادات المستخدم وسياسات تلك الجهات.</p>
+<p>لا يطلب الموقع من الزائر بيانات الدفع للمشاركة في المزادات؛ تتم أي إجراءات تسجيل أو دفع لدى الجهة المنظمة للمزاد وعلى مسؤوليتها.</p>
 </div>
-
-<!-- TERMS -->
 
 <div class="info-card" id="terms">
-
 <h2>الشروط وإخلاء المسؤولية</h2>
-
-<p>
-المعلومات والروابط المنشورة في مرصد المزادات لأغراض التعريف والإرشاد فقط.
-نسعى إلى عرض بيانات دقيقة وتحديثها، لكننا لا نضمن اكتمالها أو استمرار توفر المزاد أو صحة كل تفصيل يرد في المصدر الخارجي.
-</p>
-
-<p>
-على المستخدم التحقق من تفاصيل المزاد ومواعيده وشروطه ورسومه وحالة الأصل مباشرة من الجهة المنظمة قبل التسجيل أو اتخاذ قرار.
-</p>
-
-<p>
-لا يتحمل مرصد المزادات مسؤولية نتائج المشاركة أو التعاملات التي تتم بين المستخدم والجهات الخارجية.
-</p>
-
+<p>المعلومات والروابط المنشورة في مرصد المزادات لأغراض التعريف والإرشاد فقط. نسعى إلى عرض بيانات دقيقة وتحديثها، لكننا لا نضمن اكتمالها أو استمرار توفر المزاد أو صحة كل تفصيل يرد في المصدر الخارجي.</p>
+<p>على المستخدم التحقق من تفاصيل المزاد ومواعيده وشروطه ورسومه وحالة الأصل مباشرة من الجهة المنظمة قبل التسجيل أو اتخاذ قرار.</p>
+<p>لا يتحمل مرصد المزادات مسؤولية نتائج المشاركة أو التعاملات التي تتم بين المستخدم والجهات الخارجية.</p>
 </div>
-
 </section>
 
-<!-- FOOTER -->
-
 <footer class="footer">
-
 <h2>مرصد المزادات</h2>
-
 <div>كل المزادات .. في مكان واحد</div>
-
 <div class="footer-links">
-
 <a href="#about">عن المنصة</a>
-
 <a href="#faq">الأسئلة الشائعة</a>
-
 <a href="#contact">تواصل معنا</a>
-
 <a href="#privacy">سياسة الخصوصية</a>
-
 <a href="#terms">الشروط وإخلاء المسؤولية</a>
-
 </div>
-
-<div class="copyright">
-© <span id="year"></span> مرصد المزادات - جميع الحقوق محفوظة
-</div>
-
+<div class="copyright">© <span id="year"></span> مرصد المزادات - جميع الحقوق محفوظة</div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+document.getElementById("year").textContent = new Date().getFullYear();
 
-document.getElementById("year").textContent =
-new Date().getFullYear();
+/* إعداد اتصال Supabase */
+const SUPABASE_URL = "https://qvstihtqqtgpcrsqruml.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "ضع_المفتاح_العام_هنا";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+const grid = document.getElementById("auctionGrid");
+const connectionStatus = document.getElementById("connectionStatus");
+
+let allAuctions = [];
+let selectedCategory = "الكل";
+let currentSearch = "";
 
 function escapeHTML(value) {
-return value.replace(/[&<>"']/g, function(char) {
-return {
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[char];
-});
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[char]);
 }
 
-document.getElementById("searchForm").addEventListener("submit", function(event) {
+function safeURL(value) {
+  try {
+    const url = new URL(value);
+    return ["https:","http:"].includes(url.protocol) ? url.href : null;
+  } catch {
+    return null;
+  }
+}
 
-event.preventDefault();
+function formatDate(value) {
+  if (!value) return "غير محدد";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "غير محدد";
+  return new Intl.DateTimeFormat("ar-SA", {
+    year:"numeric",month:"long",day:"numeric"
+  }).format(date);
+}
 
-const query =
-document.getElementById("searchInput").value.trim();
+function showMessage(title, message) {
+  grid.innerHTML = `
+    <div class="empty">
+      <div style="font-size:40px;color:#f2b51b">⌕</div>
+      <h3>${escapeHTML(title)}</h3>
+      <p>${escapeHTML(message)}</p>
+    </div>`;
+}
 
-const grid =
-document.getElementById("auctionGrid");
+function renderAuctions() {
+  let results = allAuctions.filter(item => {
+    const categoryMatch =
+      selectedCategory === "الكل" ||
+      (item.category || "").includes(selectedCategory);
 
-grid.innerHTML = `
-<div class="empty">
-<div style="font-size:40px;color:#f2b51b">⌕</div>
-<h3>
-${query ? "لا توجد نتائج منشورة عن: " + escapeHTML(query) : "لا توجد مزادات منشورة حاليًا"}
-</h3>
-<p>
-سيظهر البحث هنا عند توفر مزادات موثقة ومضافة إلى الدليل.
-</p>
-</div>
-`;
+    const searchText = [
+      item.title,item.description,item.category,item.city,
+      item.organizer,item.source_name
+    ].join(" ").toLowerCase();
 
-document.getElementById("auctions").scrollIntoView({
-behavior:"smooth"
+    const searchMatch = !currentSearch ||
+      searchText.includes(currentSearch.toLowerCase());
+
+    return categoryMatch && searchMatch;
+  });
+
+  if (!results.length) {
+    showMessage(
+      "لا توجد مزادات مطابقة",
+      "جرّب البحث بكلمات أخرى أو اختر تصنيفاً مختلفاً."
+    );
+    return;
+  }
+
+  grid.innerHTML = results.map(item => {
+    const link = safeURL(item.source_url);
+    const title = escapeHTML(item.title);
+    const description = escapeHTML(item.description || "لا يوجد وصف متاح لهذا المزاد.");
+    const category = escapeHTML(item.category || "غير مصنف");
+    const city = escapeHTML(item.city || "غير محدد");
+    const source = escapeHTML(item.source_name || item.organizer || "المصدر الأصلي");
+    const status = item.status === "active" ? "مزاد قائم" :
+      item.status === "ended" ? "منتهي" :
+      item.status === "cancelled" ? "ملغي" :
+      item.status === "postponed" ? "مؤجل" : "قادم";
+
+    return `
+      <article class="auction-card">
+        <div class="auction-meta">
+          <span class="auction-tag">${category}</span>
+          <span class="auction-tag">${city}</span>
+        </div>
+        <h3>${title}</h3>
+        <p>${description}</p>
+        <div class="auction-meta">
+          <span>📅 البداية: ${escapeHTML(formatDate(item.starts_at))}</span>
+        </div>
+        <div class="auction-meta">
+          <span>🏢 ${source}</span>
+          <span class="auction-status">${status}</span>
+        </div>
+        ${link
+          ? `<a class="auction-link" href="${escapeHTML(link)}" target="_blank" rel="noopener noreferrer">زيارة مصدر المزاد ↗</a>`
+          : `<span class="auction-tag">رابط المصدر غير متاح</span>`}
+      </article>`;
+  }).join("");
+}
+
+async function loadAuctions() {
+  connectionStatus.textContent = "جارٍ تحميل المزادات...";
+
+  try {
+    const { data, error } = await supabaseClient
+      .from("auctions")
+      .select("id,title,description,category,city,organizer,source_name,source_url,starts_at,ends_at,status,last_verified_at")
+      .eq("is_published", true)
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    allAuctions = data || [];
+    connectionStatus.textContent = `تم تحميل ${allAuctions.length} مزاد منشور`;
+
+    if (!allAuctions.length) {
+      showMessage(
+        "لا توجد مزادات منشورة حالياً",
+        "ستظهر هنا المزادات بعد إضافتها واعتماد نشرها في قاعدة البيانات."
+      );
+      return;
+    }
+
+    renderAuctions();
+  } catch (error) {
+    console.error("Supabase error:", error);
+    connectionStatus.textContent = "تعذر الاتصال بقاعدة البيانات";
+    showMessage(
+      "تعذر تحميل المزادات",
+      "تحقق من إعدادات الاتصال بقاعدة البيانات وسياسات الوصول، ثم أعد المحاولة."
+    );
+  }
+}
+
+document.getElementById("searchForm").addEventListener("submit", event => {
+  event.preventDefault();
+  currentSearch = document.getElementById("searchInput").value.trim();
+  renderAuctions();
+  document.getElementById("auctions").scrollIntoView({behavior:"smooth"});
 });
 
+document.querySelectorAll(".category").forEach(category => {
+  category.addEventListener("click", () => {
+    document.querySelectorAll(".category").forEach(item => item.classList.remove("active"));
+    category.classList.add("active");
+    selectedCategory = category.dataset.category;
+    renderAuctions();
+  });
 });
 
-document.querySelectorAll(".category").forEach(function(category) {
-
-category.addEventListener("click", function() {
-
-document.querySelectorAll(".category").forEach(function(item) {
-item.classList.remove("active");
+document.getElementById("showAll").addEventListener("click", event => {
+  event.preventDefault();
+  selectedCategory = "الكل";
+  currentSearch = "";
+  document.getElementById("searchInput").value = "";
+  document.querySelectorAll(".category").forEach(item => {
+    item.classList.toggle("active", item.dataset.category === "الكل");
+  });
+  renderAuctions();
 });
 
-this.classList.add("active");
-
-});
-
-});
-
+if (SUPABASE_PUBLISHABLE_KEY === "ضع_المفتاح_العام_هنا") {
+  connectionStatus.textContent = "أضف مفتاح Supabase العام في إعدادات الكود أولاً";
+  showMessage("الموقع بانتظار إعداد الاتصال", "أضف مفتاح Supabase العام لتفعيل عرض المزادات.");
+} else {
+  loadAuctions();
+}
 </script>
-
 </body>
 </html>
