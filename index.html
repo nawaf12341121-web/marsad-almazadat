@@ -1,1 +1,105 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="مرصد المزادات - منصة تجمع إعلانات المزادات المتاحة في السعودية من مصادرها المختلفة.">
+<title>مرصد المزادات | كل المزادات في مكان واحد</title>
+<style>
+:root{--navy:#101d35;--gold:#c9a45c;--light:#f5f6f8;--text:#202a3a}
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--light);color:var(--text)}
+header{background:var(--navy);color:white;padding:22px 6%;border-bottom:3px solid var(--gold)}
+nav{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:bold;color:white}
+.logo span{color:var(--gold)}
+nav a{color:#eee;text-decoration:none;margin-right:18px;font-size:14px}
+.hero{background:linear-gradient(120deg,#101d35,#203657);color:white;text-align:center;padding:65px 20px 55px}
+.hero h1{font-size:34px;margin:0 0 15px}
+.hero p{color:#d5dce7;margin-bottom:28px}
+.search{max-width:650px;margin:auto;display:flex;background:white;padding:6px;border-radius:9px}
+.search input{flex:1;min-width:0;border:0;padding:13px;font-size:15px;outline:none}
+.search button{background:var(--gold);border:0;border-radius:6px;padding:0 25px;font-weight:bold;cursor:pointer}
+.container{max-width:1100px;margin:35px auto;padding:0 18px}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.section-head h2{font-size:23px;color:var(--navy)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 25px}
+.filters button{border:1px solid #ddd;background:white;padding:9px 17px;border-radius:20px;cursor:pointer;color:#354258}
+.filters button.active{background:var(--navy);color:white;border-color:var(--navy)}
+.empty{background:white;border:1px solid #e8e9ed;border-radius:12px;text-align:center;padding:55px 15px}
+.empty .symbol{font-size:43px;color:var(--gold)}
+.empty h3{color:var(--navy);margin:12px 0}
+.empty p{color:#78808d;line-height:1.8;font-size:14px}
+.notice{background:#fff9ed;border-right:4px solid var(--gold);padding:18px 20px;margin:35px 0;border-radius:5px;font-size:13px;line-height:2;color:#665638}
+footer{background:var(--navy);color:#cbd2dd;text-align:center;padding:25px 15px;font-size:13px;line-height:2}
+footer strong{color:var(--gold)}
+@media(max-width:600px){.hero h1{font-size:27px}.search button{padding:0 15px}.logo{font-size:21px}nav a{margin-right:8px}}
+</style>
+</head>
+<body>
+<header>
+<nav>
+<div class="logo">مرصد <span>المزادات</span></div>
+<div>
+<a href="#home">الرئيسية</a>
+<a href="#auctions">المزادات</a>
+<a href="#about">عن المنصة</a>
+</div>
+</nav>
+</header>
+
+<section class="hero" id="home">
+<h1>كل المزادات.. في مكان واحد</h1>
+<p>اكتشف المزادات المتاحة في السعودية وتابعها من مصادرها الرسمية</p>
+<div class="search">
+<input id="searchInput" type="search" placeholder="ابحث عن مزاد أو سيارة أو عقار...">
+<button onclick="searchAuctions()">بحث</button>
+</div>
+</section>
+
+<main class="container" id="auctions">
+<div class="section-head">
+<h2>أحدث المزادات</h2>
+<span style="font-size:13px;color:#818995">تابع الفرص الجديدة من مصادرها</span>
+</div>
+
+<div class="filters">
+<button class="active" onclick="setFilter(this,'الكل')">جميع المزادات</button>
+<button onclick="setFilter(this,'سيارات')">سيارات</button>
+<button onclick="setFilter(this,'عقارات')">عقارات</button>
+<button onclick="setFilter(this,'منوعات')">منوعات</button>
+</div>
+
+<div class="empty">
+<div class="symbol">⌕</div>
+<h3>نعمل على تجهيز المزادات</h3>
+<p>نعمل على جمع المزادات والتحقق من مصادرها.<br>ستظهر الإعلانات الجديدة هنا عند توفرها.</p>
+</div>
+
+<section class="notice" id="about">
+<strong>تنويه مهم:</strong><br>
+مرصد المزادات منصة إعلانية وتجميعية لعرض المزادات المتاحة في السعودية، ولا ينظم المزادات أو يستقبل المزايدات أو عمليات البيع والشراء. تتم المشاركة في المزادات عبر الجهات والمنصات المنظمة لها.
+</section>
+</main>
+
+<footer>
+<strong>مرصد المزادات</strong><br>
+كل المزادات.. في مكان واحد<br>
+© <span id="year"></span> مرصد المزادات - جميع الحقوق محفوظة
+</footer>
+
+<script>
+document.getElementById("year").textContent=new Date().getFullYear();
+function searchAuctions(){
+const value=document.getElementById("searchInput").value.trim();
+if(value) alert("سيتم تفعيل البحث عند ربط قاعدة بيانات المزادات.");
+}
+function setFilter(button,category){
+document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+button.classList.add("active");
+}
+</script>
+</body>
+</html>
+
