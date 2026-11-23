@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>إدارة مرصد المزادات</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{font-family:Arial,sans-serif;background:#f3f5f7;margin:0;padding:20px;color:#222}
+.container{max-width:900px;margin:auto}
+.card{background:white;padding:20px;border-radius:12px;margin-bottom:18px;box-shadow:0 2px 8px #0001}
+h2{margin-top:0}
+input,textarea,select{width:100%;box-sizing:border-box;padding:12px;margin:7px 0 14px;border:1px solid #ddd;border-radius:7px;font-size:15px}
+textarea{min-height:90px}
+button{padding:11px 18px;border:0;border-radius:7px;background:#176b52;color:white;font-size:15px;cursor:pointer;margin:4px}
+button.secondary{background:#555}
+button.danger{background:#b83232}
+.hidden{display:none}
+.item{border:1px solid #ddd;padding:14px;border-radius:8px;margin:10px 0}
+small{color:#666}
+#message{margin:12px 0;color:#176b52}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>مرصد المزادات | لوحة الإدارة</h2>
+
+<div class="card" id="loginBox">
+<h3>تسجيل دخول المدير</h3>
+<input id="email" type="email" placeholder="البريد الإلكتروني">
+<input id="password" type="password" placeholder="كلمة المرور">
+<button onclick="login()">دخول</button>
+<div id="loginMessage"></div>
+</div>
+
+<div id="adminPanel" class="hidden">
+<div class="card">
+<button class="secondary" onclick="logout()">تسجيل الخروج</button>
+<h3 id="formTitle">إضافة مزاد جديد</h3>
+<form id="auctionForm">
+<input id="title" placeholder="عنوان المزاد" required>
+<input id="category" placeholder="التصنيف">
+<input id="source_name" placeholder="اسم المصدر">
+<input id="source_url" placeholder="رابط المصدر">
+<input id="auction_url" placeholder="رابط المزاد">
+<input id="location" placeholder="الموقع">
+<textarea id="description" placeholder="وصف المزاد"></textarea>
+<input id="image_url" placeholder="رابط صورة المزاد">
+<label>تاريخ البداية</label>
+<input id="start_date" type="datetime-local">
+<label>تاريخ النهاية</label>
+<input id="end_date" type="datetime-local">
+<label>حالة المزاد</label>
+<select id="status">
+<option value="published">منشور</option>
+<option value="draft">مسودة</option>
+</select>
+<button type="submit">حفظ المزاد</button>
+<button type="button" class="secondary" onclick="resetForm()">إلغاء</button>
+</form>
+<div id="message"></div>
+</div>
+
+<div class="card">
+<h3>المزادات المسجلة</h3>
+<button onclick="loadAuctions()">تحديث القائمة</button>
+<div id="auctionList">جاري التحميل...</div>
+</div>
+</div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://qvstihtqqtgpcrsqruml.supabase.co";
+const SUPABASE_KEY = "sb_publishable_P5kd7PluEy92nWdYb3PbCg_1a8-ZOm5";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let editingId = null;
+
+async function login(){
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+ const msg=document.getElementById("loginMessage");
+ msg.textContent="جاري تسجيل الدخول...";
+ const {data,error}=await db.auth.signInWithPassword({email,password});
+ if(error){msg.textContent="تعذر الدخول: "+error.message;return;}
+ await checkAdmin(data.user);
+}
+
+async function checkAdmin(user){
+ const msg=document.getElementById("loginMessage");
+ const {data,error}=await db.from("admin_users")
+ .select("user_id").eq("user_id",user.id).maybeSingle();
+
+ if(error || !data){
+   await db.auth.signOut();
+   msg.textContent="هذا الحساب غير مصرح له بالدخول إلى لوحة الإدارة.";
+   return;
+ }
+ document.getElementById("loginBox").classList.add("hidden");
+ document.getElementById("adminPanel").classList.remove("hidden");
+ loadAuctions();
+}
+
+async function logout(){
+ await db.auth.signOut();
+ location.reload();
+}
+
+async function loadAuctions(){
+ const list=document.getElementById("auctionList");
+ list.textContent="جاري تحميل المزادات...";
+ const {data,error}=await db.from("auctions")
+ .select("id,title,category,source_name,source_url,auction_url,location,description,image_url,start_date,end_date,status")
+ .order("id",{ascending:false});
+
+ if(error){list.textContent="خطأ في تحميل المزادات: "+error.message;return;}
+ if(!data.length){list.textContent="لا توجد مزادات مسجلة.";return;}
+
+ list.innerHTML="";
+ data.forEach(a=>{
+   const item=document.createElement("div");
+   item.className="item";
+   const title=document.createElement("strong");
+   title.textContent=a.title||"بدون عنوان";
+   const info=document.createElement("p");
+   info.textContent="التصنيف: "+(a.category||"-")+" | الحالة: "+(a.status||"-");
+   const edit=document.createElement("button");
+   edit.textContent="تعديل";
+   edit.onclick=()=>editAuction(a);
+   const del=document.createElement("button");
+   del.textContent="حذف";
+   del.className="danger";
+   del.onclick=()=>deleteAuction(a.id);
+   item.append(title,info,edit,del);
+   list.appendChild(item);
+ });
+}
+
+function editAuction(a){
+ editingId=a.id;
+ document.getElementById("formTitle").textContent="تعديل المزاد";
+ ["title","category","source_name","source_url","auction_url","location","description","image_url","status"]
+ .forEach(k=>document.getElementById(k).value=a[k]||"");
+
+ document.getElementById("start_date").value=a.start_date?toLocal(a.start_date):"";
+ document.getElementById("end_date").value=a.end_date?toLocal(a.end_date):"";
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function toLocal(value){
+ const d=new Date(value);
+ const offset=d.getTimezoneOffset()*60000;
+ return new Date(d.getTime()-offset).toISOString().slice(0,16);
+}
+
+function resetForm(){
+ editingId=null;
+ document.getElementById("auctionForm").reset();
+ document.getElementById("formTitle").textContent="إضافة مزاد جديد";
+ document.getElementById("message").textContent="";
+}
+
+document.getElementById("auctionForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const msg=document.getElementById("message");
+ const fields=["title","category","source_name","source_url","auction_url","location","description","image_url","status"];
+ const record={};
+ fields.forEach(k=>record[k]=document.getElementById(k).value.trim()||null);
+
+ const start=document.getElementById("start_date").value;
+ const end=document.getElementById("end_date").value;
+ record.start_date=start?new Date(start).toISOString():null;
+ record.end_date=end?new Date(end).toISOString():null;
+
+ msg.textContent="جاري الحفظ...";
+ let result;
+ if(editingId){
+   result=await db.from("auctions").update(record).eq("id",editingId);
+ }else{
+   result=await db.from("auctions").insert(record);
+ }
+
+ if(result.error){msg.textContent="حدث خطأ: "+result.error.message;return;}
+ msg.textContent="تم الحفظ بنجاح.";
+ resetForm();
+ loadAuctions();
+});
+
+async function deleteAuction(id){
+ if(!confirm("هل أنت متأكد من حذف هذا المزاد؟"))return;
+ const {error}=await db.from("auctions").delete().eq("id",id);
+ if(error){alert("تعذر الحذف: "+error.message);return;}
+ alert("تم حذف المزاد.");
+ loadAuctions();
+}
+
+(async()=>{
+ const {data}=await db.auth.getSession();
+ if(data.session) await checkAdmin(data.session.user);
+})();
+</script>
+</body>
+</html>
