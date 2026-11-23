@@ -12,7 +12,7 @@ import re
 import sys
 import time
 from datetime import datetime, timezone
-from urllib.parse import urlparse, urljoin
+from urllib.parse import urlparse, urljoin, unquote
 
 import requests
 from bs4 import BeautifulSoup
@@ -45,7 +45,8 @@ def collect_detail_links(soup: BeautifulSoup, base_url: str) -> list[str]:
         if parsed.netloc.lower() != "abdullafouadauction.com":
             continue
         # Detail pages on this source use Arabic auction slugs.
-        if "/المزاد-" not in parsed.path and "/auction/" not in parsed.path.lower():
+        decoded_path = unquote(parsed.path)
+        if "/المزاد-" not in decoded_path and "/auction/" not in decoded_path.lower():
             continue
         href = parsed._replace(query="", fragment="").geturl()
         if href not in seen:
