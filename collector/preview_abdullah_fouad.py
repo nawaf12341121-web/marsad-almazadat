@@ -27,7 +27,7 @@ HEADERS = {
 
 
 def clean(value: str | None) -> str:
-    return re.sub(r"\\s+", " ", value or "").strip()
+    return re.sub(r"\s+", " ", value or "").strip()
 
 
 def canonical(url: str) -> str:
@@ -140,12 +140,12 @@ def extract_auction(session: requests.Session, url: str) -> dict:
 
     text = clean(soup.get_text(" ", strip=True))
     location = ""
-    location_match = re.search(r"الموقع\\s*[:：]?\\s*(.{5,180}?)(?:\\s+(?:نوع المزاد|أيام المزاد|نص الإعلان|كيف تشارك))", text)
+    location_match = re.search(r"الموقع\s*[:：]?\s*(.{5,180}?)(?:\s+(?:نوع المزاد|أيام المزاد|نص الإعلان|كيف تشارك))", text)
     if location_match:
         location = clean(location_match.group(1))
 
     published = ""
-    published_match = re.search(r"تاريخ النشر\\s*[:：]?\\s*(.{3,50}?)(?:\\s+(?:تفاصيل المزاد|نوع المزاد))", text)
+    published_match = re.search(r"تاريخ النشر\s*[:：]?\s*(.{3,50}?)(?:\s+(?:تفاصيل المزاد|نوع المزاد))", text)
     if published_match:
         published = clean(published_match.group(1))
 
