@@ -92,7 +92,11 @@ async function checkAdmin(user){
  const {data,error}=await db.from("admin_users")
  .select("user_id").eq("user_id",user.id).maybeSingle();
 
- if(error || !data){
+ if(error){
+  msg.textContent = "خطأ قاعدة البيانات: " + error.message;
+  return;
+}
+if(!data){
    await db.auth.signOut();
    msg.textContent="هذا الحساب غير مصرح له بالدخول إلى لوحة الإدارة.";
    return;
