@@ -350,6 +350,7 @@ async function loadAuctions() {
     renderAuctions();
   } catch (error) {
     console.error("Supabase error:", error);
+connectionStatus.textContent = error.message || JSON.stringify(error);
     connectionStatus.textContent = "تعذر الاتصال بقاعدة البيانات";
     showMessage(
       "تعذر تحميل المزادات",
