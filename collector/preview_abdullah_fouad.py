@@ -12,7 +12,7 @@ import re
 import sys
 import time
 from datetime import datetime, timezone
-from pathlib import urlparse, urljoin
+from urllib.parse import urlparse, urljoin
 
 import requests
 from bs4 import BeautifulSoup
