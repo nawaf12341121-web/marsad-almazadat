@@ -4,9 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#062653">
-<meta name="robots" content="index,follow">
+<meta name="robots" content="index,follow,max-image-preview:large">
 <title>تفاصيل المزاد | مرصد المزادات</title>
-<meta name="description" content="تفاصيل المزاد ومعلوماته وروابط المصدر الأصلي عبر مرصد المزادات.">
+<meta name="description" content="اطّلع على تفاصيل المزاد ومواعيده وموقعه والجهة المنظمة، وانتقل إلى المصدر الأصلي عبر مرصد المزادات.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ar_SA">
+<meta property="og:site_name" content="مرصد المزادات">
+<meta property="og:title" content="تفاصيل المزاد | مرصد المزادات">
+<meta property="og:description" content="تفاصيل المزاد ومواعيده ومعلومات الجهة المنظمة ورابط المصدر الأصلي.">
 <style>
 :root{--navy:#062653;--navy2:#0b3269;--gold:#f2b51b;--bg:#f4f6fb;--ink:#10264a}
 *{box-sizing:border-box}
@@ -62,6 +67,23 @@ async function load(){
  const image=safeURL(data.image_url);
  const auctionLink=safeURL(data.auction_url);
  const sourceLink=safeURL(data.source_url);
+ document.title = (data.title || "تفاصيل المزاد") + " | مرصد المزادات";
+ const pageDescription = (data.description || "تفاصيل المزاد ومواعيده ومعلومات الجهة المنظمة عبر مرصد المزادات.").replace(/\s+/g," ").slice(0,155);
+ const descriptionTag = document.querySelector('meta[name="description"]');
+ if(descriptionTag) descriptionTag.setAttribute("content", pageDescription);
+ const canonicalUrl = location.origin + location.pathname + "?id=" + encodeURIComponent(id);
+ let canonicalTag = document.querySelector('link[rel="canonical"]');
+ if(!canonicalTag){canonicalTag=document.createElement("link");canonicalTag.rel="canonical";document.head.appendChild(canonicalTag);}
+ canonicalTag.href = canonicalUrl;
+ const ogTitle = document.querySelector('meta[property="og:title"]');
+ if(ogTitle) ogTitle.setAttribute("content", document.title);
+ const ogDescription = document.querySelector('meta[property="og:description"]');
+ if(ogDescription) ogDescription.setAttribute("content", pageDescription);
+ if(image){
+   let ogImage = document.querySelector('meta[property="og:image"]');
+   if(!ogImage){ogImage=document.createElement("meta");ogImage.setAttribute("property","og:image");document.head.appendChild(ogImage);}
+   ogImage.setAttribute("content", image);
+ }
  result.className="card";
  result.innerHTML=`
  ${image?`<img class="cover" src="${esc(image)}" alt="${esc(data.title)}" loading="lazy">`:""}
