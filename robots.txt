@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nawaf12341121-web.github.io/marsad-almazadat/sitemap.xml
