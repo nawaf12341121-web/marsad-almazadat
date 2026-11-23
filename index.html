@@ -270,8 +270,11 @@ function renderAuctions() {
       (item.category || "").includes(selectedCategory);
 
     const searchText = [
-      item.title,item.description,item.category,item.city,
-      item.organizer,item.source_name
+      item.title,
+      item.description,
+      item.category,
+      item.location,
+      item.source_name
     ].join(" ").toLowerCase();
 
     const searchMatch = !currentSearch ||
@@ -289,12 +292,12 @@ function renderAuctions() {
   }
 
   grid.innerHTML = results.map(item => {
-    const link = safeURL(item.source_url);
+    const link = safeURL(item.auction_url) || safeURL(item.source_url);
     const title = escapeHTML(item.title);
     const description = escapeHTML(item.description || "لا يوجد وصف متاح لهذا المزاد.");
     const category = escapeHTML(item.category || "غير مصنف");
-    const city = escapeHTML(item.city || "غير محدد");
-    const source = escapeHTML(item.source_name || item.organizer || "المصدر الأصلي");
+    const city = escapeHTML(item.location || "غير محدد");
+    const source = escapeHTML(item.source_name || "المصدر الأصلي");
     const status = item.status === "active" ? "مزاد قائم" :
       item.status === "ended" ? "منتهي" :
       item.status === "cancelled" ? "ملغي" :
@@ -309,7 +312,7 @@ function renderAuctions() {
         <h3>${title}</h3>
         <p>${description}</p>
         <div class="auction-meta">
-          <span>📅 البداية: ${escapeHTML(formatDate(item.starts_at))}</span>
+          <span>📅 البداية: ${escapeHTML(formatDate(item.start_date))}</span>
         </div>
         <div class="auction-meta">
           <span>🏢 ${source}</span>
@@ -328,19 +331,18 @@ async function loadAuctions() {
   try {
     const { data, error } = await supabaseClient
       .from("auctions")
-      .select("id,title,description,category,city,organizer,source_name,source_url,starts_at,ends_at,status,last_verified_at")
-      .eq("is_published", true)
+      .select("id,title,category,source_name,source_url,auction_url,location,description,image_url,start_date,end_date,status,created_at,updated_at")
       .order("created_at", { ascending: false });
 
     if (error) throw error;
 
     allAuctions = data || [];
-    connectionStatus.textContent = `تم تحميل ${allAuctions.length} مزاد منشور`;
+    connectionStatus.textContent = `تم تحميل ${allAuctions.length} مزاد`;
 
     if (!allAuctions.length) {
       showMessage(
-        "لا توجد مزادات منشورة حالياً",
-        "ستظهر هنا المزادات بعد إضافتها واعتماد نشرها في قاعدة البيانات."
+        "لا توجد مزادات حالياً",
+        "ستظهر هنا المزادات بعد إضافتها إلى قاعدة البيانات."
       );
       return;
     }
