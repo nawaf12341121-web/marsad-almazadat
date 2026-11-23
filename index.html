@@ -354,7 +354,7 @@ connectionStatus.textContent = error.message || JSON.stringify(error);
     connectionStatus.textContent = "تعذر الاتصال بقاعدة البيانات";
     showMessage(
       "تعذر تحميل المزادات",
-      "تحقق من إعدادات الاتصال بقاعدة البيانات وسياسات الوصول، ثم أعد المحاولة."
+   error.message || JSON.stringify(error)
     );
   }
 }
