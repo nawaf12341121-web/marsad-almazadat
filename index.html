@@ -356,6 +356,7 @@ async function loadAuctions() {
     const { data, error } = await supabaseClient
       .from("auctions")
       .select("id,title,category,source_name,source_url,auction_url,location,description,image_url,start_date,end_date,status,created_at,updated_at")
+      .eq("status", "published")
       .order("created_at", { ascending: false });
 
     if (error) throw error;
@@ -374,11 +375,10 @@ async function loadAuctions() {
     renderAuctions();
   } catch (error) {
     console.error("Supabase error:", error);
-connectionStatus.textContent = error.message || JSON.stringify(error);
     connectionStatus.textContent = "تعذر الاتصال بقاعدة البيانات";
     showMessage(
       "تعذر تحميل المزادات",
-   error.message || JSON.stringify(error)
+      "حدث خطأ أثناء تحميل البيانات. حاول تحديث الصفحة بعد قليل."
     );
   }
 }
