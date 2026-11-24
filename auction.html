@@ -16,13 +16,15 @@
 :root{--navy:#062653;--navy2:#0b3269;--gold:#f2b51b;--bg:#f4f6fb;--ink:#10264a}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}
-header{background:#fff;padding:16px 5%;box-shadow:0 2px 14px #10264a0c}
-header a{color:var(--navy);text-decoration:none;font-weight:bold;font-size:22px}
+header{background:#fff;padding:12px 5%;box-shadow:0 2px 14px #10264a0c}
+header a{color:var(--navy);text-decoration:none;font-weight:bold;font-size:21px;display:inline-flex;align-items:center;gap:10px}
+.brand-mark{width:42px;height:42px;display:grid;place-items:center;flex:0 0 auto;color:#c58a1c;border:1px solid #d9a63b;border-radius:13px;background:linear-gradient(145deg,#fff,#f7f2e7)}
+.brand-mark svg{width:33px;height:33px;display:block}
 main{max-width:900px;margin:32px auto;padding:0 16px}
 .back{display:inline-block;margin-bottom:18px;color:var(--navy);text-decoration:none;font-weight:bold}
 .card{background:#fff;border:1px solid #e2e7f0;border-radius:18px;overflow:hidden;box-shadow:0 5px 22px #10264a0c}
 .cover{width:100%;max-height:430px;object-fit:cover;display:block;background:#e9edf7}
-.cover-placeholder{min-height:230px;background:linear-gradient(135deg,#062653,#174477);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#fff;text-align:center}.cover-placeholder .symbol{font-size:64px;color:#f2b51b}.cover-placeholder strong{font-size:24px}.cover-placeholder small{font-size:14px;color:#d5dfef}
+.cover-placeholder{min-height:230px;background:linear-gradient(135deg,#062653,#174477);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#fff;text-align:center}.cover-placeholder .symbol{font-size:0;width:68px;height:68px;border:1px solid #f2b51b99;border-radius:20px;position:relative;background:#ffffff0b}.cover-placeholder .symbol:before{content:"";position:absolute;inset:12px;border:2px solid #f2b51b;border-radius:50%}.cover-placeholder .symbol:after{content:"";position:absolute;width:24px;height:10px;left:21px;top:28px;border-top:2px solid #f2b51b;border-bottom:2px solid #f2b51b;transform:skewY(-20deg)}.cover-placeholder strong{font-size:24px}.cover-placeholder small{font-size:14px;color:#d5dfef}
 .content{padding:25px}
 h1{color:var(--navy);font-size:30px;line-height:1.6;margin:0 0 14px}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
@@ -42,7 +44,7 @@ footer{text-align:center;color:#7b8799;padding:25px;font-size:12px}
 </style>
 </head>
 <body>
-<header><a href="./">⚖ مرصد المزادات</a></header>
+<header><a href="./"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48" role="presentation"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="24" cy="24" r="12.5" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".65"/><path d="M15 29V19l9 7 9-7v10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="13" r="2.2" fill="currentColor"/></svg></span><span>مرصد المزادات</span></a></header>
 <main>
 <a class="back" id="backToAuctions" href="./">← العودة إلى جميع المزادات</a>
 <div id="result" class="message">جارٍ تحميل تفاصيل المزاد...</div>
@@ -105,7 +107,7 @@ async function load(){
  }
  result.className="card";
  result.innerHTML=`
- ${image?`<img class="cover" src="${esc(image)}" alt="${esc(data.title)}" loading="lazy">`:`<div class="cover-placeholder" role="img" aria-label="صورة المزاد غير متاحة"><span class="symbol">⚖</span><strong>مرصد المزادات</strong><small>الصورة غير متاحة حالياً</small></div>`}
+ ${image?`<img class="cover" src="${esc(image)}" alt="${esc(data.title)}" loading="lazy">`:`<div class="cover-placeholder" role="img" aria-label="صورة المزاد غير متاحة"><span class="symbol" aria-hidden="true"></span><strong>مرصد المزادات</strong><small>الصورة غير متاحة حالياً</small></div>`}
  <div class="content">
  <div class="tags"><span class="tag">${esc(data.category||"غير مصنف")}</span><span class="tag">${esc(data.location||"الموقع غير محدد")}</span><span class="tag status">${esc(statusLabel(data.status,data.start_date,data.end_date))}</span></div>
  <h1>${esc(data.title)}</h1>
