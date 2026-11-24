@@ -155,7 +155,7 @@ async function loadAuctions(){
    const del=document.createElement("button");
    del.textContent="حذف";
    del.className="danger";
-   del.onclick=()=>deleteAuction(a.id);
+   del.onclick=()=>deleteAuction(a.id,a.title);
    item.append(title,info,edit,del);
    list.appendChild(item);
  });
@@ -328,8 +328,15 @@ document.getElementById("auctionForm").addEventListener("submit",async e=>{
  loadAuctions();
 });
 
-async function deleteAuction(id){
- if(!confirm("هل أنت متأكد من حذف هذا المزاد؟"))return;
+async function deleteAuction(id,title){
+ const auctionTitle=String(title||"").trim();
+ if(!confirm("تنبيه: حذف المزاد نهائي ولا يمكن التراجع عنه.\n\nالمزاد: "+auctionTitle+"\n\nهل تريد المتابعة؟"))return;
+ const confirmation=prompt("للتأكيد، اكتب عنوان المزاد كما يظهر تماماً:");
+ if(confirmation===null)return;
+ if(confirmation.trim()!==auctionTitle){
+  alert("لم يتطابق العنوان؛ تم إلغاء الحذف.");
+  return;
+ }
  const {error}=await db.from("auctions").delete().eq("id",id);
  if(error){alert("تعذر الحذف: "+error.message);return;}
  alert("تم حذف المزاد.");
