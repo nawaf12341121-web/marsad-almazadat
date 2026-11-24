@@ -354,11 +354,11 @@ function normalizeSearchText(value) {
   return String(value ?? "")
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\\u064B-\\u065F\\u0670\\u0640]/g, "")
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, "")
     .replace(/[أإآٱ]/g, "ا")
     .replace(/ى/g, "ي")
     .replace(/ة/g, "ه")
-    .replace(/[^\\p{L}\\p{N}]+/gu, " ")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
     .trim();
 }
 
@@ -368,7 +368,7 @@ function renderAuctions() {
     "المركبات": ["سيارات","مركبات","شاحنات","دراجات"],
     "المنقولات": ["معدات","آليات","شركات","تصفيات","سكراب","خردة","أثاث","أجهزة","مواشي","أغنام","إبل"]
   };
-  const searchTerms = normalizeSearchText(currentSearch).split(/\\s+/).filter(Boolean);
+  const searchTerms = normalizeSearchText(currentSearch).split(/\s+/).filter(Boolean);
   let results = allAuctions.filter(item => {
     const itemCategory = normalizeSearchText(item.category);
     const categoryMatch = selectedCategory === "الكل" || (categoryTerms[selectedCategory] || [selectedCategory]).some(term => itemCategory.includes(normalizeSearchText(term)));
