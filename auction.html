@@ -43,7 +43,7 @@ footer{text-align:center;color:#7b8799;padding:25px;font-size:12px}
 <body>
 <header><a href="./">⚖ مرصد المزادات</a></header>
 <main>
-<a class="back" href="./">← العودة إلى جميع المزادات</a>
+<a class="back" id="backToAuctions" href="./">← العودة إلى جميع المزادات</a>
 <div id="result" class="message">جارٍ تحميل تفاصيل المزاد...</div>
 </main>
 <footer>© <span id="year"></span> مرصد المزادات</footer>
@@ -54,6 +54,9 @@ const SUPABASE_URL = "https://qvstihtqqtgpcrsqruml.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_P5kd7PluEy92nWdYb3PbCg_1a8-ZOm5";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 const result = document.getElementById("result");
+const returnPage = Math.max(1, Number(new URLSearchParams(location.search).get("page")) || 1);
+document.getElementById("backToAuctions").href = "./?page=" + returnPage + "#auctions";
+document.querySelector("header a").href = "./?page=" + returnPage + "#auctions";
 function esc(value){return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function safeURL(value){try{const u=new URL(value);return ["https:","http:"].includes(u.protocol)?u.href:null;}catch{return null;}}
 function date(value){if(!value)return "غير محدد";const d=new Date(value);if(Number.isNaN(d.getTime()))return "غير محدد";return new Intl.DateTimeFormat("ar-SA",{year:"numeric",month:"long",day:"numeric"}).format(d);}
