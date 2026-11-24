@@ -84,6 +84,55 @@
  .auction-group-title{font-size:14px;margin:9px 0 7px;padding-bottom:5px}
 }
 
+
+/* Wasalt-inspired auction directory layout */
+:root{--navy:#173b67;--navy2:#244f7d;--gold:#d7a23b;--gold2:#e7bd69;--bg:#f7f8fa;--ink:#24364b;--muted:#748196;--line:#e8ebef}
+body{background:#f7f8fa;color:#26384d}
+.header{min-height:76px;background:#fff;color:#173b67;padding:10px max(3%,calc((100% - 1320px)/2));box-shadow:0 2px 12px #142c4810;border-bottom:1px solid #edf0f4}
+.brand h2{color:#173b67;font-size:22px}.brand small{color:#8490a0}
+.brand-mark{color:#c9942e;background:#fbf8f1;border-color:#e9d7b2;box-shadow:none}
+.nav a{color:#42536a}.nav a:hover,.nav a:first-child{background:#edf3f8;color:#173b67;box-shadow:none}
+.app-button{background:#f4f6f8;border:1px solid #e6eaf0;color:#53657a}
+.wasalt-hero{background:#fff;border-bottom:1px solid #edf0f4}
+.wasalt-hero-inner{max-width:1320px;margin:auto;padding:34px 22px 26px;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.wasalt-hero h1{font-size:32px;color:#203b5c;margin:0 0 7px;font-weight:800}
+.wasalt-hero p{font-size:14px;color:#7c8797;margin:0}
+.wasalt-hero .search{width:min(570px,55%);height:48px;border:1px solid #e2e7ed;border-radius:9px;box-shadow:none;padding:3px}
+.wasalt-hero .search input{font-size:13px}
+.wasalt-hero .search button{border-radius:7px;background:#244f7d;box-shadow:none;padding:0 25px;font-size:13px}
+.categories.wasalt-categories{max-width:1320px;margin:0 auto;padding:0 22px;display:flex;gap:8px;justify-content:flex-start;border-bottom:1px solid #e6eaf0;background:transparent}
+.wasalt-categories .category{min-height:0;padding:15px 22px;border:0;border-radius:0;background:transparent;box-shadow:none;font-size:14px;color:#65758a;white-space:nowrap}
+.wasalt-categories .category .icon{display:none}
+.wasalt-categories .category:hover,.wasalt-categories .category.active{color:#1c4b79;border:0;border-bottom:3px solid #d7a23b;transform:none}
+.notice{max-width:1320px;margin:18px auto}
+.notice-content{border:1px solid #e9edf1;border-right:4px solid #d7a23b;border-radius:9px;box-shadow:none;background:#fff;font-size:12px}
+.notice-title{border-radius:6px;background:#f8f2e7;color:#9a7023}
+.main{max-width:1320px;margin:23px auto;padding-left:22px;padding-right:22px}
+.section-title h2{font-size:23px;color:#263e5b;border:0;padding:0}
+.all-link{border-radius:7px;background:#fff;color:#315578}
+#connectionStatus{font-size:12px!important;color:#8792a1!important}
+.auctions{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.auction-card{border:1px solid #e8ebef;border-radius:10px;padding:10px;gap:9px;box-shadow:0 2px 9px #1d35500a}
+.auction-card:hover{transform:translateY(-2px);box-shadow:0 7px 18px #1d355015}
+.auction-visual .auction-image,.auction-visual .auction-image-placeholder,.auction-image,.auction-image-placeholder{height:165px;border-radius:7px}
+.auction-card h3{font-size:15px;color:#243e5c;line-height:1.6}
+.auction-card p{font-size:12px;color:#7c8797}
+.auction-tag{background:#f1f4f7;color:#52647a;border-radius:5px;font-size:11px}
+.auction-status{border-radius:5px;font-size:11px}
+.auction-status.active{background:#e7f5ed;color:#23804d}
+.auction-status.upcoming{background:#eaf2fa;color:#316d9e}
+.auction-status.ended{background:#eef0f3;color:#707b89}
+.auction-detail-link{background:#244f7d;border-radius:7px;box-shadow:none;padding:10px;font-size:12px}
+.auction-source-link{border-radius:7px;background:#f2f5f8;font-size:11px}
+.auction-group-title{font-size:17px;color:#304966;border-bottom:1px solid #e5e9ee}
+.auction-group-title span{background:#edf1f5;color:#69788a;border-radius:5px}
+.empty{border-radius:10px;box-shadow:none}
+.features-inner,.info-card{box-shadow:none;border-radius:10px}
+.footer{background:#fff;color:#506176;border-top:1px solid #e7ebf0}
+.footer h2{color:#173b67}.footer-links a{color:#53667c}.copyright{color:#8792a1}
+@media(max-width:850px){.wasalt-hero-inner{display:block;padding:24px 16px}.wasalt-hero .search{width:100%;margin-top:18px}.categories.wasalt-categories{padding:0 12px;overflow-x:auto}.wasalt-categories .category{padding:13px 17px}.auctions{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.wasalt-hero h1{font-size:25px}.wasalt-hero-inner{padding:20px 14px}.main{padding-left:12px;padding-right:12px}.auctions{grid-template-columns:1fr}.auction-visual .auction-image,.auction-visual .auction-image-placeholder,.auction-image,.auction-image-placeholder{height:190px}}
+
 </style>
 </head>
 <body>
@@ -94,20 +143,13 @@
 <a href="#home" class="app-button">📍 المملكة العربية السعودية</a>
 </header>
 
-<section class="hero" id="home"><div class="hero-content"><div class="hero-text">
-<h1>مرصد <span>المزادات</span></h1><h2>كل المزادات في مكان واحد ..</h2><p>اكتشف المزادات السعودية بسهولة وسرعة</p>
-<form class="search" id="searchForm"><input type="search" id="searchInput" placeholder="ابحث عن مزاد معين ..." aria-label="ابحث عن مزاد"><button type="submit">بحث　⌕</button></form>
-</div></div></section>
+<section class="wasalt-hero" id="home"><div class="wasalt-hero-inner"><div><h1>مزادات في السعودية</h1><p>اكتشف المزادات المتاحة في مكان واحد</p></div><form class="search" id="searchForm"><input type="search" id="searchInput" placeholder="ابحث باسم المزاد أو المدينة أو الجهة المنظمة" aria-label="ابحث عن مزاد"><button type="submit">بحث</button></form></div></section>
 
-<nav class="categories">
-<a class="category active" href="#auctions" data-category="الكل"><span class="icon">🌐</span><span>جميع المزادات</span></a>
-<a class="category" href="#auctions" data-category="السيارات"><span class="icon">🚘</span><span>السيارات والمركبات</span></a>
-<a class="category" href="#auctions" data-category="العقارات"><span class="icon">⌂</span><span>العقارات</span></a>
-<a class="category" href="#auctions" data-category="المعدات"><span class="icon">🚜</span><span>المعدات والآليات</span></a>
-<a class="category" href="#auctions" data-category="الشركات"><span class="icon">▦</span><span>الشركات والتصفيات</span></a>
-<a class="category" href="#auctions" data-category="السكراب"><span class="icon">♻</span><span>السكراب والخردة</span></a>
-<a class="category" href="#auctions" data-category="الأثاث"><span class="icon">🛋</span><span>الأثاث والأجهزة</span></a>
-<a class="category" href="#auctions" data-category="المواشي"><span class="icon">🐪</span><span>المواشي</span></a>
+<nav class="categories wasalt-categories" aria-label="تصنيفات المزادات">
+<a class="category active" href="#auctions" data-category="الكل"><span>الكل</span></a>
+<a class="category" href="#auctions" data-category="العقارات"><span>العقارات</span></a>
+<a class="category" href="#auctions" data-category="المركبات"><span>المركبات</span></a>
+<a class="category" href="#auctions" data-category="المنقولات"><span>المنقولات</span></a>
 </nav>
 
 <section class="notice">
@@ -251,10 +293,9 @@ function getAuctionStatus(item) {
 
 function renderAuctions() {
   const categoryTerms = {
-    "السيارات": ["سيارات","مركبات"], "العقارات": ["عقارات"],
-    "المعدات": ["معدات","آليات","شاحنات"], "الشركات": ["شركات","تصفيات"],
-    "السكراب": ["سكراب","خردة"], "الأثاث": ["أثاث","أجهزة"],
-    "المواشي": ["مواشي","أغنام","إبل"]
+    "العقارات": ["عقارات","أراضي","فلل","شقق"],
+    "المركبات": ["سيارات","مركبات","شاحنات","دراجات"],
+    "المنقولات": ["معدات","آليات","شركات","تصفيات","سكراب","خردة","أثاث","أجهزة","مواشي","أغنام","إبل"]
   };
   let results = allAuctions.filter(item => {
     const itemCategory = (item.category || "").toLowerCase();
