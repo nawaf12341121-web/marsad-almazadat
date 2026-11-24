@@ -67,6 +67,7 @@ a{color:inherit}
 .section-title h2{color:var(--navy);font-size:27px;margin:0;border-bottom:4px solid var(--gold);padding-bottom:7px}
 .all-link{text-decoration:none;border:1px solid var(--navy);border-radius:30px;padding:10px 20px;font-weight:bold;font-size:14px}
 .auctions{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.auction-group{margin:0 0 26px}.auction-group-title{display:flex;align-items:center;gap:10px;color:var(--navy);font-size:21px;margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid #e2e7f0}.auction-group-title span{font-size:13px;background:#e9edf7;border-radius:20px;padding:5px 10px;color:#53627a}.auction-status.ended{color:#9b3434}.auction-status.active{color:#177245}.auction-status.upcoming{color:#9a6b00}
 .auction-card{background:#fff;border:1px solid #e2e7f0;border-radius:15px;padding:18px;display:flex;flex-direction:column;gap:11px;box-shadow:0 3px 12px #10264a08}
 .auction-image{width:100%;height:180px;object-fit:cover;border-radius:11px;background:#e9edf7}
 .auction-actions{display:flex;flex-direction:column;gap:8px;margin-top:auto}
@@ -287,84 +288,58 @@ function showMessage(title, message) {
     </div>`;
 }
 
-function renderAuctions() {
-  let results = allAuctions.filter(item => {
-    const itemCategory = (item.category || "").toLowerCase();
-    const categoryTerms = {
-      "السيارات": ["سيارات","مركبات"],
-      "العقارات": ["عقارات"],
-      "المعدات": ["معدات","آليات","شاحنات"],
-      "الشركات": ["شركات","تصفيات"],
-      "السكراب": ["سكراب","خردة"],
-      "الأثاث": ["أثاث","أجهزة"],
-      "المواشي": ["مواشي","أغنام","إبل","إبل"]
-    };
-    const categoryMatch = selectedCategory === "الكل" ||
-      (categoryTerms[selectedCategory] || [selectedCategory]).some(term => itemCategory.includes(term));
-
-    const searchText = [
-      item.title,
-      item.description,
-      item.category,
-      item.location,
-      item.source_name
-    ].join(" ").toLowerCase();
-
-    const searchMatch = !currentSearch ||
-      searchText.includes(currentSearch.toLowerCase());
-
-    return categoryMatch && searchMatch;
-  });
-
-  if (!results.length) {
-    showMessage(
-      "لا توجد مزادات مطابقة",
-      "جرّب البحث بكلمات أخرى أو اختر تصنيفاً مختلفاً."
-    );
-    return;
-  }
-
-  grid.innerHTML = results.map(item => {
-    const auctionLink = safeURL(item.auction_url);
-    const sourceLink = safeURL(item.source_url);
-    const image = safeURL(item.image_url);
-    const title = escapeHTML(item.title);
-    const description = escapeHTML(item.description || "لا يوجد وصف متاح لهذا المزاد.");
-    const category = escapeHTML(item.category || "غير مصنف");
-    const city = escapeHTML(item.location || "غير محدد");
-    const source = escapeHTML(item.source_name || "المصدر الأصلي");
-    const now = new Date();
-    const startDate = item.start_date ? new Date(item.start_date) : null;
-    const endDate = item.end_date ? new Date(item.end_date) : null;
-    const status = item.status === "cancelled" ? "ملغي" :
-      item.status === "postponed" ? "مؤجل" :
-      item.status === "ended" || (endDate && !Number.isNaN(endDate.getTime()) && endDate < now) ? "منتهي" :
-      item.status === "active" || (startDate && !Number.isNaN(startDate.getTime()) && startDate <= now) ? "مزاد قائم" : "قادم";
-
-    return `
-      <article class="auction-card">
-        ${image ? `<img class="auction-image" src="${escapeHTML(image)}" alt="${title}" loading="lazy">` : ""}
-        <div class="auction-meta">
-          <span class="auction-tag">${category}</span>
-          <span class="auction-tag">${city}</span>
-        </div>
-        <h3>${title}</h3>
-        <p>${description}</p>
-        <div class="auction-meta">
-          <span>📅 البداية: ${escapeHTML(formatDate(item.start_date))}</span>
-        </div>
-        <div class="auction-meta">
-          <span>🏢 ${source}</span>
-          <span class="auction-status">${status}</span>
-        </div>
-        <div class="auction-actions">
-          <a class="auction-detail-link" href="auction.html?id=${encodeURIComponent(item.id)}">عرض تفاصيل المزاد ←</a>
-          ${auctionLink ? `<a class="auction-source-link" href="${escapeHTML(auctionLink)}" target="_blank" rel="noopener noreferrer">زيارة صفحة المزاد الأصلية ↗</a>` : sourceLink ? `<a class="auction-source-link" href="${escapeHTML(sourceLink)}" target="_blank" rel="noopener noreferrer">زيارة المصدر ↗</a>` : ""}
-        </div>
-      </article>`;
-  }).join("");
+function getAuctionStatus(item) {
+  if (item.status === "cancelled") return "cancelled";
+  if (item.status === "postponed") return "postponed";
+  if (item.status === "ended") return "ended";
+  const now = new Date();
+  const start = item.start_date ? new Date(item.start_date) : null;
+  const end = item.end_date ? new Date(item.end_date) : null;
+  if (end && !Number.isNaN(end.getTime()) && end < now) return "ended";
+  if (start && !Number.isNaN(start.getTime()) && start > now) return "upcoming";
+  if (start && !Number.isNaN(start.getTime()) && start <= now && (!end || Number.isNaN(end.getTime()) || end >= now)) return "active";
+  if (!start && item.status === "active") return "active";
+  return "upcoming";
 }
 
+function renderAuctions() {
+  const categoryTerms = {
+    "السيارات": ["سيارات","مركبات"], "العقارات": ["عقارات"],
+    "المعدات": ["معدات","آليات","شاحنات"], "الشركات": ["شركات","تصفيات"],
+    "السكراب": ["سكراب","خردة"], "الأثاث": ["أثاث","أجهزة"],
+    "المواشي": ["مواشي","أغنام","إبل"]
+  };
+  let results = allAuctions.filter(item => {
+    const itemCategory = (item.category || "").toLowerCase();
+    const categoryMatch = selectedCategory === "الكل" || (categoryTerms[selectedCategory] || [selectedCategory]).some(term => itemCategory.includes(term));
+    const searchText = [item.title,item.description,item.category,item.location,item.source_name].join(" ").toLowerCase();
+    return categoryMatch && (!currentSearch || searchText.includes(currentSearch.toLowerCase()));
+  });
+  if (!results.length) { showMessage("لا توجد مزادات مطابقة","جرّب البحث بكلمات أخرى أو اختر تصنيفاً مختلفاً."); return; }
+  const groups = [
+    {key:"active", title:"المزادات القائمة"},
+    {key:"upcoming", title:"المزادات القادمة"},
+    {key:"ended", title:"المزادات المنتهية"}
+  ];
+  const rank = {active:0, upcoming:1, ended:2, cancelled:1, postponed:1};
+  results.sort((a,b) => (rank[getAuctionStatus(a)] ?? 1) - (rank[getAuctionStatus(b)] ?? 1));
+  const cardHTML = item => {
+    const state = getAuctionStatus(item);
+    const status = state === "active" ? "قائم" : state === "ended" ? "منتهي" : state === "cancelled" ? "ملغي" : state === "postponed" ? "مؤجل" : "قادم";
+    const auctionLink = safeURL(item.auction_url), sourceLink = safeURL(item.source_url), image = safeURL(item.image_url);
+    const title = escapeHTML(item.title), description = escapeHTML(item.description || "لا يوجد وصف متاح لهذا المزاد.");
+    const category = escapeHTML(item.category || "غير مصنف"), city = escapeHTML(item.location || "غير محدد");
+    const source = escapeHTML(item.source_name || "المصدر الأصلي");
+    return `<article class="auction-card">${image ? `<img class="auction-image" src="${escapeHTML(image)}" alt="${title}" loading="lazy">` : ""}<div class="auction-meta"><span class="auction-tag">${category}</span><span class="auction-tag">${city}</span></div><h3>${title}</h3><p>${description}</p><div class="auction-meta"><span>📅 البداية: ${escapeHTML(formatDate(item.start_date))}</span></div><div class="auction-meta"><span>🏢 ${source}</span><span class="auction-status ${state}">${status}</span></div><div class="auction-actions"><a class="auction-detail-link" href="auction.html?id=${encodeURIComponent(item.id)}">عرض تفاصيل المزاد ←</a>${auctionLink ? `<a class="auction-source-link" href="${escapeHTML(auctionLink)}" target="_blank" rel="noopener noreferrer">زيارة صفحة المزاد الأصلية ↗</a>` : sourceLink ? `<a class="auction-source-link" href="${escapeHTML(sourceLink)}" target="_blank" rel="noopener noreferrer">زيارة المصدر ↗</a>` : ""}</div></article>`;
+  };
+  grid.innerHTML = groups.map(group => {
+    const items = results.filter(item => getAuctionStatus(item) === group.key);
+    if (!items.length) return "";
+    return `<section class="auction-group"><h3 class="auction-group-title">${group.title}<span>${items.length} مزاد</span></h3><div class="auctions">${items.map(cardHTML).join("")}</div></section>`;
+  }).join("");
+  const special = results.filter(item => ["cancelled","postponed"].includes(getAuctionStatus(item)));
+  if (special.length) grid.innerHTML += `<section class="auction-group"><h3 class="auction-group-title">مزادات مؤجلة أو ملغاة</h3><div class="auctions">${special.map(cardHTML).join("")}</div></section>`;
+}
 async function loadAuctions() {
   connectionStatus.textContent = "جارٍ تحميل المزادات...";
 
@@ -373,7 +348,6 @@ async function loadAuctions() {
       .from("auctions")
       .select("id,title,category,source_name,source_url,auction_url,location,description,image_url,start_date,end_date,status,created_at,updated_at")
       .eq("status", "published")
-      .or(`end_date.is.null,end_date.gte.${new Date().toISOString()}`)
       .order("created_at", { ascending: false });
 
     if (error) throw error;
