@@ -5,4 +5,54 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://nawaf12341121-web.github.io/marsad-almazadat/auction.html?id=1</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawaf12341121-web.github.io/marsad-almazadat/auction.html?id=2</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawaf12341121-web.github.io/marsad-almazadat/auction.html?id=3</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawaf12341121-web.github.io/marsad-almazadat/auction.html?id=4</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawaf12341121-web.github.io/marsad-almazadat/auction.html?id=5</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawaf12341121-web.github.io/marsad-almazadat/auction.html?id=6</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawaf12341121-web.github.io/marsad-almazadat/auction.html?id=7</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawaf12341121-web.github.io/marsad-almazadat/auction.html?id=8</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawaf12341121-web.github.io/marsad-almazadat/auction.html?id=9</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nawaf12341121-web.github.io/marsad-almazadat/auction.html?id=10</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
