@@ -133,6 +133,17 @@ body{background:#f7f8fa;color:#26384d}
 @media(max-width:850px){.wasalt-hero-inner{display:block;padding:24px 16px}.wasalt-hero .search{width:100%;margin-top:18px}.categories.wasalt-categories{padding:0 12px;overflow-x:auto}.wasalt-categories .category{padding:13px 17px}.auctions{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.wasalt-hero h1{font-size:25px}.wasalt-hero-inner{padding:20px 14px}.main{padding-left:12px;padding-right:12px}.auctions{grid-template-columns:1fr}.auction-visual .auction-image,.auction-visual .auction-image-placeholder,.auction-image,.auction-image-placeholder{height:190px}}
 
+
+/* Category pictograms inspired by Wasalt's top navigation */
+.categories.wasalt-categories{align-items:stretch;gap:0}
+.wasalt-categories .category{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;min-width:105px;padding:13px 20px 12px;color:#68798d}
+.wasalt-categories .category-icon{width:36px;height:36px;display:grid;place-items:center;color:#60758c;background:#f3f6f8;border-radius:50%;transition:.2s}
+.wasalt-categories .category-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
+.wasalt-categories .category>span:last-child{font-size:13px;font-weight:700}
+.wasalt-categories .category:hover .category-icon,.wasalt-categories .category.active .category-icon{color:#244f7d;background:#e8eff5}
+.wasalt-categories .category:hover,.wasalt-categories .category.active{color:#244f7d;border-bottom:3px solid #d7a23b}
+@media(max-width:850px){.wasalt-categories .category{min-width:88px;padding:11px 14px}.wasalt-categories .category-icon{width:32px;height:32px}}
+
 </style>
 </head>
 <body>
@@ -146,10 +157,10 @@ body{background:#f7f8fa;color:#26384d}
 <section class="wasalt-hero" id="home"><div class="wasalt-hero-inner"><div><h1>مزادات في السعودية</h1><p>اكتشف المزادات المتاحة في مكان واحد</p></div><form class="search" id="searchForm"><input type="search" id="searchInput" placeholder="ابحث باسم المزاد أو المدينة أو الجهة المنظمة" aria-label="ابحث عن مزاد"><button type="submit">بحث</button></form></div></section>
 
 <nav class="categories wasalt-categories" aria-label="تصنيفات المزادات">
-<a class="category active" href="#auctions" data-category="الكل"><span>الكل</span></a>
-<a class="category" href="#auctions" data-category="العقارات"><span>العقارات</span></a>
-<a class="category" href="#auctions" data-category="المركبات"><span>المركبات</span></a>
-<a class="category" href="#auctions" data-category="المنقولات"><span>المنقولات</span></a>
+<a class="category active" href="#auctions" data-category="الكل"><span class="category-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span><span>الكل</span></a>
+<a class="category" href="#auctions" data-category="العقارات"><span class="category-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/><path d="M2 10.5 12 2l10 8.5"/></svg></span><span>العقارات</span></a>
+<a class="category" href="#auctions" data-category="المركبات"><span class="category-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 11 1.7-4.2A2 2 0 0 1 8.6 5.5h6.8a2 2 0 0 1 1.9 1.3L19 11"/><path d="M3 11.5h18v6a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/><path d="M3 14h18M6.5 19v1.5M17.5 19v1.5"/><circle cx="6.5" cy="15.5" r=".8"/><circle cx="17.5" cy="15.5" r=".8"/></svg></span><span>المركبات</span></a>
+<a class="category" href="#auctions" data-category="المنقولات"><span class="category-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 4.5v9L12 21l-9-4.5v-9z"/><path d="m3.5 7.7 8.5 4.4 8.5-4.4M12 12v9M7.5 5.2l9 4.6"/></svg></span><span>المنقولات</span></a>
 </nav>
 
 <section class="notice">
