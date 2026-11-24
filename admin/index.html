@@ -78,6 +78,13 @@ small{color:#666}
 <button onclick="loadCandidates()">تحديث المرشحات</button>
 <div id="candidateList">جاري التحميل...</div>
 </div>
+
+<div class="card">
+<h3>مصادر المزادات وأذونات الجمع</h3>
+<p>لا تغيّر الإذن إلى «مسموح» إلا بعد التأكد من أن المصدر يسمح بجمع بيانات مزاداته.</p>
+<button onclick="loadSources()">تحديث المصادر</button>
+<div id="sourceList">جاري التحميل...</div>
+</div>
 </div>
 </div>
 
@@ -151,6 +158,44 @@ async function loadAuctions(){
    del.onclick=()=>deleteAuction(a.id);
    item.append(title,info,edit,del);
    list.appendChild(item);
+ });
+}
+
+async function loadSources(){
+ const list=document.getElementById("sourceList");
+ list.textContent="جاري تحميل المصادر...";
+ const {data,error}=await db.from("auction_sources")
+  .select("id,source_name,website_url,permission_status,source_status,notes")
+  .order("source_name");
+ if(error){list.textContent="تعذر تحميل المصادر: "+error.message;return;}
+ list.innerHTML="";
+ data.forEach(source=>{
+  const item=document.createElement("div"); item.className="item";
+  const title=document.createElement("strong"); title.textContent=source.source_name;
+  const link=document.createElement("a"); link.href=source.website_url||"#";
+  link.target="_blank"; link.rel="noopener noreferrer"; link.textContent="فتح المصدر";
+  const select=document.createElement("select");
+  ["unknown","pending","allowed","restricted"].forEach(value=>{
+   const option=document.createElement("option"); option.value=value;
+   option.textContent=({unknown:"غير مؤكد",pending:"بانتظار الرد",allowed:"مسموح",restricted:"غير مسموح"})[value];
+   if(source.permission_status===value) option.selected=true;
+   select.appendChild(option);
+  });
+  const notes=document.createElement("input"); notes.placeholder="ملاحظة / مرجع الإذن";
+  notes.value=source.notes||"";
+  const save=document.createElement("button"); save.textContent="حفظ حالة الإذن";
+  save.onclick=async()=>{
+   if(select.value==="allowed" && !confirm("هل تأكدت من موافقة المصدر على طريقة الجمع المحددة؟"))return;
+   const {error}=await db.from("auction_sources").update({
+    permission_status:select.value, notes:notes.value.trim()||null,
+    last_checked_at:new Date().toISOString(), updated_at:new Date().toISOString()
+   }).eq("id",source.id);
+   if(error){alert("تعذر حفظ المصدر: "+error.message);return;}
+   alert("تم تحديث حالة المصدر."); loadSources();
+  };
+  const state=document.createElement("p");
+  state.textContent="حالة المصدر: "+(source.source_status||"-")+" | إذن الجمع: "+source.permission_status;
+  item.append(title,state,link,select,notes,save); list.appendChild(item);
  });
 }
 
