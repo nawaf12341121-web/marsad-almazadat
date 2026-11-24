@@ -260,7 +260,7 @@ const connectionStatus = document.getElementById("connectionStatus");
 let allAuctions = [];
 let selectedCategory = "الكل";
 let currentSearch = "";
-let currentPage = 1;
+let currentPage = Math.max(1, Number(new URLSearchParams(location.search).get("page")) || 1);
 const auctionsPerPage = 10;
 
 function escapeHTML(value) {
@@ -342,7 +342,7 @@ function renderAuctions() {
     const title = escapeHTML(item.title), description = escapeHTML(item.description || "لا يوجد وصف متاح لهذا المزاد.");
     const category = escapeHTML(item.category || "غير مصنف"), city = escapeHTML(item.location || "غير محدد");
     const source = escapeHTML(item.source_name || "المصدر الأصلي");
-    return `<article class="auction-card">${image ? `<img class="auction-image" src="${escapeHTML(image)}" alt="${title}" loading="lazy">` : ""}<div class="auction-meta"><span class="auction-tag">${category}</span><span class="auction-tag">${city}</span></div><h3>${title}</h3><p>${description}</p><div class="auction-meta"><span>📅 البداية: ${escapeHTML(formatDate(item.start_date))}</span></div><div class="auction-meta"><span>🏢 ${source}</span><span class="auction-status ${state}">${status}</span></div><div class="auction-actions"><a class="auction-detail-link" href="auction.html?id=${encodeURIComponent(item.id)}">عرض تفاصيل المزاد ←</a>${auctionLink ? `<a class="auction-source-link" href="${escapeHTML(auctionLink)}" target="_blank" rel="noopener noreferrer">زيارة صفحة المزاد الأصلية ↗</a>` : sourceLink ? `<a class="auction-source-link" href="${escapeHTML(sourceLink)}" target="_blank" rel="noopener noreferrer">زيارة المصدر ↗</a>` : ""}</div></article>`;
+    return `<article class="auction-card">${image ? `<img class="auction-image" src="${escapeHTML(image)}" alt="${title}" loading="lazy">` : ""}<div class="auction-meta"><span class="auction-tag">${category}</span><span class="auction-tag">${city}</span></div><h3>${title}</h3><p>${description}</p><div class="auction-meta"><span>📅 البداية: ${escapeHTML(formatDate(item.start_date))}</span></div><div class="auction-meta"><span>🏢 ${source}</span><span class="auction-status ${state}">${status}</span></div><div class="auction-actions"><a class="auction-detail-link" href="auction.html?id=${encodeURIComponent(item.id)}&page=${currentPage}">عرض تفاصيل المزاد ←</a>${auctionLink ? `<a class="auction-source-link" href="${escapeHTML(auctionLink)}" target="_blank" rel="noopener noreferrer">زيارة صفحة المزاد الأصلية ↗</a>` : sourceLink ? `<a class="auction-source-link" href="${escapeHTML(sourceLink)}" target="_blank" rel="noopener noreferrer">زيارة المصدر ↗</a>` : ""}</div></article>`;
   };
   grid.innerHTML = groups.map(group => {
     const items = pageResults.filter(item => getAuctionStatus(item) === group.key);
