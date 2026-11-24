@@ -373,6 +373,7 @@ async function loadAuctions() {
       .from("auctions")
       .select("id,title,category,source_name,source_url,auction_url,location,description,image_url,start_date,end_date,status,created_at,updated_at")
       .eq("status", "published")
+      .or(`end_date.is.null,end_date.gte.${new Date().toISOString()}`)
       .order("created_at", { ascending: false });
 
     if (error) throw error;
