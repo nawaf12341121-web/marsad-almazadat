@@ -71,6 +71,13 @@ small{color:#666}
 <button onclick="loadAuctions()">تحديث القائمة</button>
 <div id="auctionList">جاري التحميل...</div>
 </div>
+
+<div class="card">
+<h3>مرشحات المزادات — بانتظار المراجعة</h3>
+<p>الموافقة تضيف المزاد إلى القائمة بحالة «بانتظار المراجعة»؛ ولن يظهر للزوار حتى تنشره بنفسك.</p>
+<button onclick="loadCandidates()">تحديث المرشحات</button>
+<div id="candidateList">جاري التحميل...</div>
+</div>
 </div>
 </div>
 
@@ -145,6 +152,48 @@ async function loadAuctions(){
    item.append(title,info,edit,del);
    list.appendChild(item);
  });
+}
+
+async function loadCandidates(){
+ const list=document.getElementById("candidateList");
+ list.textContent="جاري تحميل المرشحات...";
+ const {data,error}=await db.from("auction_candidates")
+  .select("id,source_id,title,category,location,auction_url,candidate_status,discovered_at")
+  .eq("candidate_status","pending").order("discovered_at",{ascending:false});
+ if(error){list.textContent="تعذر تحميل المرشحات: "+error.message;return;}
+ if(!data.length){list.textContent="لا توجد مرشحات تنتظر المراجعة.";return;}
+ list.innerHTML="";
+ data.forEach(c=>{
+  const item=document.createElement("div"); item.className="item";
+  const title=document.createElement("strong"); title.textContent=c.title||"بدون عنوان";
+  const info=document.createElement("p");
+  info.textContent="الموقع: "+(c.location||"-")+" | المصدر: "+c.source_id.slice(0,8);
+  const open=document.createElement("a");
+  open.href=c.auction_url; open.target="_blank"; open.rel="noopener noreferrer";
+  open.textContent="فتح رابط المزاد";
+  const approve=document.createElement("button"); approve.textContent="قبول وإضافة للمراجعة";
+  approve.onclick=()=>approveCandidate(c.id);
+  const reject=document.createElement("button"); reject.textContent="رفض";
+  reject.className="danger"; reject.onclick=()=>rejectCandidate(c.id);
+  item.append(title,info,open,approve,reject); list.appendChild(item);
+ });
+}
+
+async function approveCandidate(id){
+ if(!confirm("إضافة هذا المرشح إلى المزادات بحالة بانتظار المراجعة؟"))return;
+ const {data,error}=await db.rpc("approve_auction_candidate",{p_candidate_id:id});
+ if(error){alert("تعذر قبول المرشح: "+error.message);return;}
+ alert("تمت إضافته للمزادات برقم "+data+"، ولم يُنشر للزوار.");
+ loadCandidates(); loadAuctions();
+}
+
+async function rejectCandidate(id){
+ if(!confirm("هل تريد رفض هذا المرشح؟"))return;
+ const {error}=await db.from("auction_candidates")
+  .update({candidate_status:"rejected",reviewed_at:new Date().toISOString(),updated_at:new Date().toISOString()})
+  .eq("id",id).eq("candidate_status","pending");
+ if(error){alert("تعذر رفض المرشح: "+error.message);return;}
+ loadCandidates();
 }
 
 function editAuction(a){
