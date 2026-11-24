@@ -317,7 +317,7 @@ function renderAuctions() {
   });
   if (!results.length) { showMessage("لا توجد مزادات مطابقة","جرّب البحث بكلمات أخرى أو اختر تصنيفاً مختلفاً."); return; }
   const groups = [
-    {key:"active", title:"المزادات القائمة"},
+    {key:"active", title:"المزادات الجارية"},
     {key:"upcoming", title:"المزادات القادمة"},
     {key:"ended", title:"المزادات المنتهية"}
   ];
@@ -325,7 +325,7 @@ function renderAuctions() {
   results.sort((a,b) => (rank[getAuctionStatus(a)] ?? 1) - (rank[getAuctionStatus(b)] ?? 1));
   const cardHTML = item => {
     const state = getAuctionStatus(item);
-    const status = state === "active" ? "قائم" : state === "ended" ? "منتهي" : state === "cancelled" ? "ملغي" : state === "postponed" ? "مؤجل" : "قادم";
+    const status = state === "active" ? "يجري الآن" : state === "ended" ? "منتهي" : state === "cancelled" ? "ملغي" : state === "postponed" ? "مؤجل" : "قادم";
     const auctionLink = safeURL(item.auction_url), sourceLink = safeURL(item.source_url), image = safeURL(item.image_url);
     const title = escapeHTML(item.title), description = escapeHTML(item.description || "لا يوجد وصف متاح لهذا المزاد.");
     const category = escapeHTML(item.category || "غير مصنف"), city = escapeHTML(item.location || "غير محدد");
