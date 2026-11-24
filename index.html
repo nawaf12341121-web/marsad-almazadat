@@ -350,17 +350,31 @@ function getAuctionStatus(item) {
   return "upcoming";
 }
 
+function normalizeSearchText(value) {
+  return String(value ?? "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\\u064B-\\u065F\\u0670\\u0640]/g, "")
+    .replace(/[أإآٱ]/g, "ا")
+    .replace(/ى/g, "ي")
+    .replace(/ة/g, "ه")
+    .replace(/[^\\p{L}\\p{N}]+/gu, " ")
+    .trim();
+}
+
 function renderAuctions() {
   const categoryTerms = {
     "العقارات": ["عقارات","أراضي","فلل","شقق"],
     "المركبات": ["سيارات","مركبات","شاحنات","دراجات"],
     "المنقولات": ["معدات","آليات","شركات","تصفيات","سكراب","خردة","أثاث","أجهزة","مواشي","أغنام","إبل"]
   };
+  const searchTerms = normalizeSearchText(currentSearch).split(/\\s+/).filter(Boolean);
   let results = allAuctions.filter(item => {
-    const itemCategory = (item.category || "").toLowerCase();
-    const categoryMatch = selectedCategory === "الكل" || (categoryTerms[selectedCategory] || [selectedCategory]).some(term => itemCategory.includes(term));
-    const searchText = [item.title,item.description,item.category,item.location,item.source_name].join(" ").toLowerCase();
-    return categoryMatch && (!currentSearch || searchText.includes(currentSearch.toLowerCase()));
+    const itemCategory = normalizeSearchText(item.category);
+    const categoryMatch = selectedCategory === "الكل" || (categoryTerms[selectedCategory] || [selectedCategory]).some(term => itemCategory.includes(normalizeSearchText(term)));
+    const searchableFields = [item.title,item.description,item.category,item.location,item.source_name].map(normalizeSearchText);
+    const searchMatch = searchTerms.length === 0 || searchTerms.every(term => searchableFields.some(field => field.includes(term)));
+    return categoryMatch && searchMatch;
   });
   if (!results.length) { currentPage = 1; showMessage("لا توجد مزادات مطابقة","جرّب البحث بكلمات أخرى أو اختر تصنيفاً مختلفاً."); return; }
   const groups = [
