@@ -13,7 +13,7 @@ from urllib.parse import urlparse, urljoin, unquote, parse_qs
 import requests
 from bs4 import BeautifulSoup
 
-LIST_URL = "https://abdullafouadauction.com/%D8%A7%D9%84%D9%85%D8%B2%D8%A7%D8%AF%D8%A7%D8%AA/"
+LIST_URL = "https://abdullafouadauction.com/"
 ALLOWED_HOSTS = {"abdullafouadauction.com", "www.abdullafouadauction.com"}
 SOURCE_NAME = "عبدالله فؤاد للمزادات"
 HEADERS = {
@@ -50,7 +50,10 @@ def is_allowed(url: str) -> bool:
 
 def is_listing_page(url: str) -> bool:
     p = urlparse(url)
-    return is_allowed(url) and unquote(p.path).rstrip("/") == "/المزادات"
+    path = unquote(p.path).rstrip("/")
+    # The source currently displays its auction listing on the homepage.
+    # Keep the legacy /المزادات route supported in case the site exposes it.
+    return is_allowed(url) and path in ("", "/المزادات")
 
 
 def discover_listing_pages(soup: BeautifulSoup, current_url: str) -> list[str]:
