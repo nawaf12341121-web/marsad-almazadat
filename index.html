@@ -63,7 +63,7 @@
 <body>
 
 <header class="header">
-<a href="#home" class="brand"><span class="logo">⚖</span><span><h2>مرصد المزادات</h2><small>دليلك لفهم المزادات في السعودية</small></span></a>
+<a href="#home" class="brand"><span class="logo">🔨</span><span><h2>مرصد المزادات</h2><small>دليلك لفهم المزادات في السعودية</small></span></a>
 <nav class="nav"><a href="#home">⌂　الرئيسية</a><a href="#auctions">⚒　المزادات</a><a href="#about">●　عن الموقع</a><a href="#contact">✉　تواصل معنا</a></nav>
 <a href="#home" class="app-button">📍 المملكة العربية السعودية</a>
 </header>
@@ -149,7 +149,7 @@
 </div>
 </section>
 
-<footer class="footer"><h2>⚖　مرصد المزادات</h2><div>دليلك لفهم المزادات في السعودية</div>
+<footer class="footer"><h2>🔨　مرصد المزادات</h2><div>دليلك لفهم المزادات في السعودية</div>
 <div class="footer-links"><a href="#home">الرئيسية</a><a href="#about">عن الموقع</a><a href="#contact">تواصل معنا</a><a href="#faq">الأسئلة الشائعة</a></div>
 <div class="copyright">© <span id="year"></span> مرصد المزادات - جميع الحقوق محفوظة</div></footer>
 
@@ -254,7 +254,7 @@ function renderAuctions() {
     const title = escapeHTML(item.title), description = escapeHTML(item.description || "لا يوجد وصف متاح لهذا المزاد.");
     const category = escapeHTML(item.category || "غير مصنف"), city = escapeHTML(item.location || "غير محدد");
     const source = escapeHTML(item.source_name || "المصدر الأصلي");
-    return `<article class="auction-card"><div class="auction-visual">${image ? `<img class="auction-image" src="${escapeHTML(image)}" alt="${title}" loading="lazy">` : `<div class="auction-image-placeholder" role="img" aria-label="صورة المزاد غير متاحة"><span class="symbol">⚖</span><strong>مرصد المزادات</strong><small>الصورة غير متاحة حالياً</small></div>`}<span class="auction-status ${state}">${status}</span></div><div class="auction-meta"><span class="auction-tag">${category}</span><span class="auction-tag">${city}</span></div><h3>${title}</h3><p>${description}</p><div class="auction-meta"><span>📅 البداية: ${escapeHTML(formatDate(item.start_date))}</span></div><div class="auction-meta"><span>🏢 ${source}</span></div><div class="auction-actions"><a class="auction-detail-link" href="auction.html?id=${encodeURIComponent(item.id)}&page=${currentPage}">عرض تفاصيل المزاد ←</a>${auctionLink ? `<a class="auction-source-link" href="${escapeHTML(auctionLink)}" target="_blank" rel="noopener noreferrer">زيارة صفحة المزاد الأصلية ↗</a>` : sourceLink ? `<a class="auction-source-link" href="${escapeHTML(sourceLink)}" target="_blank" rel="noopener noreferrer">زيارة المصدر ↗</a>` : ""}</div></article>`;
+    return `<article class="auction-card"><div class="auction-visual">${image ? `<img class="auction-image" src="${escapeHTML(image)}" alt="${title}" loading="lazy">` : `<div class="auction-image-placeholder" role="img" aria-label="صورة المزاد غير متاحة"><span class="symbol">🔨</span><strong>مرصد المزادات</strong><small>الصورة غير متاحة حالياً</small></div>`}<span class="auction-status ${state}">${status}</span></div><div class="auction-meta"><span class="auction-tag">${category}</span><span class="auction-tag">${city}</span></div><h3>${title}</h3><p>${description}</p><div class="auction-meta"><span>📅 البداية: ${escapeHTML(formatDate(item.start_date))}</span></div><div class="auction-meta"><span>🏢 ${source}</span></div><div class="auction-actions"><a class="auction-detail-link" href="auction.html?id=${encodeURIComponent(item.id)}&page=${currentPage}">عرض تفاصيل المزاد ←</a>${auctionLink ? `<a class="auction-source-link" href="${escapeHTML(auctionLink)}" target="_blank" rel="noopener noreferrer">زيارة صفحة المزاد الأصلية ↗</a>` : sourceLink ? `<a class="auction-source-link" href="${escapeHTML(sourceLink)}" target="_blank" rel="noopener noreferrer">زيارة المصدر ↗</a>` : ""}</div></article>`;
   };
   grid.innerHTML = groups.map(group => {
     const items = pageResults.filter(item => getAuctionStatus(item) === group.key);
