@@ -42,11 +42,11 @@ small{color:#666}
 <input id="title" placeholder="عنوان المزاد" required>
 <input id="category" placeholder="التصنيف">
 <input id="source_name" placeholder="اسم المصدر">
-<input id="source_url" placeholder="رابط المصدر">
-<input id="auction_url" placeholder="رابط المزاد">
+<input id="source_url" type="url" placeholder="رابط المصدر (https://...)">
+<input id="auction_url" type="url" placeholder="رابط المزاد (https://...)">
 <input id="location" placeholder="الموقع">
 <textarea id="description" placeholder="وصف المزاد"></textarea>
-<input id="image_url" placeholder="رابط صورة المزاد">
+<input id="image_url" type="url" placeholder="رابط صورة المزاد (اختياري)">
 <label>تاريخ البداية</label>
 <input id="start_date" type="datetime-local">
 <label>تاريخ النهاية</label>
@@ -272,8 +272,45 @@ document.getElementById("auctionForm").addEventListener("submit",async e=>{
  const record={};
  fields.forEach(k=>record[k]=document.getElementById(k).value.trim()||null);
 
+ if(!record.title){
+  msg.textContent="أدخل عنوان المزاد أولاً.";
+  document.getElementById("title").focus();
+  return;
+ }
+
+ for(const key of ["source_url","auction_url","image_url"]){
+  const value=record[key];
+  if(value){
+   try{
+    const parsed=new URL(value);
+    if(!["http:","https:"].includes(parsed.protocol)) throw new Error("protocol");
+   }catch(_){
+    msg.textContent="تحقق من الرابط في حقل "+({
+     source_url:"رابط المصدر",
+     auction_url:"رابط المزاد",
+     image_url:"رابط الصورة"
+    }[key])+"؛ يجب أن يبدأ بـ http:// أو https://.";
+    document.getElementById(key).focus();
+    return;
+   }
+  }
+ }
+
  const start=document.getElementById("start_date").value;
  const end=document.getElementById("end_date").value;
+ if(start && Number.isNaN(new Date(start).getTime())){
+  msg.textContent="تاريخ البداية غير صالح.";
+  return;
+ }
+ if(end && Number.isNaN(new Date(end).getTime())){
+  msg.textContent="تاريخ النهاية غير صالح.";
+  return;
+ }
+ if(start && end && new Date(end)<=new Date(start)){
+  msg.textContent="تاريخ النهاية لازم يكون بعد تاريخ البداية.";
+  document.getElementById("end_date").focus();
+  return;
+ }
  record.start_date=start?new Date(start).toISOString():null;
  record.end_date=end?new Date(end).toISOString():null;
 
