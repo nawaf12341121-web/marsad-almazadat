@@ -347,7 +347,7 @@ async function loadAuctions() {
     const { data, error } = await supabaseClient
       .from("auctions")
       .select("id,title,category,source_name,source_url,auction_url,location,description,image_url,start_date,end_date,status,created_at,updated_at")
-      .eq("status", "published")
+      .in("status", ["published", "ended"])
       .order("created_at", { ascending: false });
 
     if (error) throw error;
