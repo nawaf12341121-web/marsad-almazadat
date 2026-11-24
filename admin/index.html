@@ -20,6 +20,7 @@ button.danger{background:#b83232}
 .item{border:1px solid #ddd;padding:14px;border-radius:8px;margin:10px 0}
 small{color:#666}
 #message{margin:12px 0;color:#176b52}
+.small{font-size:13px;color:#666;margin:-8px 0 12px}
 </style>
 </head>
 <body>
@@ -46,7 +47,12 @@ small{color:#666}
 <input id="auction_url" type="url" placeholder="رابط المزاد (https://...)">
 <input id="location" placeholder="الموقع">
 <textarea id="description" placeholder="وصف المزاد"></textarea>
-<input id="image_url" type="url" placeholder="رابط صورة المزاد (اختياري)">
+<label for="image_file">صورة المزاد — اختر من جهازك</label>
+<input id="image_file" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+<div id="imageUploadHint" class="small">الأنواع: JPG وPNG وWEBP وGIF — الحد الأقصى 5 ميجابايت.</div>
+<img id="imagePreview" class="hidden" alt="معاينة صورة المزاد" style="max-width:100%;max-height:220px;object-fit:contain;border-radius:8px;margin:8px 0 14px">
+<label for="image_url">أو أدخل رابط صورة مباشر (اختياري)</label>
+<input id="image_url" type="url" placeholder="https://...">
 <label>تاريخ البداية</label>
 <input id="start_date" type="datetime-local">
 <label>تاريخ النهاية</label>
@@ -94,6 +100,24 @@ const SUPABASE_KEY = "sb_publishable_P5kd7PluEy92nWdYb3PbCg_1a8-ZOm5";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let editingId = null;
+
+document.getElementById("image_file").addEventListener("change",function(){
+ const file=this.files && this.files[0];
+ const preview=document.getElementById("imagePreview");
+ if(!file){preview.src="";preview.classList.add("hidden");return;}
+ if(!["image/jpeg","image/png","image/webp","image/gif"].includes(file.type)){
+  alert("اختر صورة بصيغة JPG أو PNG أو WEBP أو GIF.");
+  this.value="";preview.src="";preview.classList.add("hidden");return;
+ }
+ if(file.size>5*1024*1024){
+  alert("حجم الصورة يتجاوز 5 ميجابايت.");
+  this.value="";preview.src="";preview.classList.add("hidden");return;
+ }
+ preview.src=URL.createObjectURL(file);
+ preview.classList.remove("hidden");
+ document.getElementById("image_url").value="";
+});
+
 
 async function login(){
  const email=document.getElementById("email").value.trim();
@@ -261,6 +285,8 @@ function toLocal(value){
 function resetForm(){
  editingId=null;
  document.getElementById("auctionForm").reset();
+ document.getElementById("imagePreview").src="";
+ document.getElementById("imagePreview").classList.add("hidden");
  document.getElementById("formTitle").textContent="إضافة مزاد جديد";
  document.getElementById("message").textContent="";
 }
@@ -314,6 +340,21 @@ document.getElementById("auctionForm").addEventListener("submit",async e=>{
  record.start_date=start?new Date(start).toISOString():null;
  record.end_date=end?new Date(end).toISOString():null;
 
+ // رفع الصورة المختارة إلى تخزين Supabase قبل حفظ بيانات المزاد
+ const imageFile=document.getElementById("image_file").files[0];
+ if(imageFile){
+  msg.textContent="جاري رفع صورة المزاد...";
+  const ext=({ "image/jpeg":"jpg","image/png":"png","image/webp":"webp","image/gif":"gif" })[imageFile.type];
+  if(!ext){msg.textContent="صيغة الصورة غير مدعومة.";return;}
+  const filePath="auctions/"+Date.now()+"-"+crypto.randomUUID()+"."+ext;
+  const {error:uploadError}=await db.storage.from("auction-images").upload(filePath,imageFile,{
+   cacheControl:"31536000",upsert:false,contentType:imageFile.type
+  });
+  if(uploadError){msg.textContent="تعذر رفع الصورة: "+uploadError.message;return;}
+  const {data:publicData}=db.storage.from("auction-images").getPublicUrl(filePath);
+  record.image_url=publicData.publicUrl;
+ }
+ 
  msg.textContent="جاري الحفظ...";
  let result;
  if(editingId){
