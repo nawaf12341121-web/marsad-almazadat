@@ -320,10 +320,13 @@ function renderAuctions() {
     const category = escapeHTML(item.category || "غير مصنف");
     const city = escapeHTML(item.location || "غير محدد");
     const source = escapeHTML(item.source_name || "المصدر الأصلي");
-    const status = item.status === "active" ? "مزاد قائم" :
-      item.status === "ended" ? "منتهي" :
-      item.status === "cancelled" ? "ملغي" :
-      item.status === "postponed" ? "مؤجل" : "قادم";
+    const now = new Date();
+    const startDate = item.start_date ? new Date(item.start_date) : null;
+    const endDate = item.end_date ? new Date(item.end_date) : null;
+    const status = item.status === "cancelled" ? "ملغي" :
+      item.status === "postponed" ? "مؤجل" :
+      item.status === "ended" || (endDate && !Number.isNaN(endDate.getTime()) && endDate < now) ? "منتهي" :
+      item.status === "active" || (startDate && !Number.isNaN(startDate.getTime()) && startDate <= now) ? "مزاد قائم" : "قادم";
 
     return `
       <article class="auction-card">
