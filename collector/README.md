@@ -35,3 +35,35 @@ python preview_abdullah_fouad.py --delay 2 --max-pages 30
 ## ملاحظة
 
 الجامع يتبع روابط ترقيم الصفحات التي تظهر في الموقع، مع حد أمان افتراضي 30 صفحة ويمكن تغييره عبر `--max-pages`. إذا غيّر الموقع تصميمه فقد يحتاج الجامع إلى تحديث. لا توجد جدولة تلقائية أو ربط بقاعدة البيانات في هذه المرحلة.
+
+## مسار استقبال المرشحات (Supabase)
+
+تم تجهيز جدول `public.auction_candidates` لاستقبال المزادات المرشحة قبل النشر، مع حالة مراجعة افتراضية `pending`. الجدول محمي بـ RLS ولا يستطيع قراءته أو تعديله إلا حساب المدير.
+
+وتم نشر Edge Function باسم `submit-auction-candidate`:
+- تتطلب جلسة دخول صالحة، وتتحقق من وجود المستخدم في `admin_users`.
+- لا تقبل المرشحات إلا من مصدر حالته `active` وإذن جمعه `allowed`.
+- تتحقق من العنوان والروابط والتواريخ.
+- تمنع التكرار حسب المعرّف الخارجي أو رابط المزاد داخل المصدر.
+- تحفظ المرشح بصفة `pending` فقط؛ ولا تنشره تلقائياً في جدول `auctions`.
+
+رابط الوظيفة:
+`https://qvstihtqqtgpcrsqruml.supabase.co/functions/v1/submit-auction-candidate`
+
+مثال جسم الطلب (بعد تسجيل دخول المدير وإرسال JWT في Authorization):
+```json
+{
+  "source_id": "UUID_FROM_auction_sources",
+  "external_id": "source-listing-id",
+  "title": "عنوان المزاد",
+  "auction_url": "https://example.com/auction/123",
+  "category": "عقارات",
+  "location": "الرياض",
+  "description": "وصف المزاد",
+  "image_url": "https://example.com/image.jpg",
+  "start_date": "2026-12-01T10:00:00+03:00",
+  "end_date": "2026-12-05T20:00:00+03:00"
+}
+```
+
+**تنبيه:** جميع المصادر السبعة مسجلة حالياً بإذن `unknown`. لذلك سترفض الوظيفة استقبال المرشحات منها إلى أن يتم توثيق الإذن وتحديث حالة المصدر. لا تشغّل جمعاً آلياً أو scraping قبل ذلك.
