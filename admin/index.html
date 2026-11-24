@@ -53,8 +53,12 @@ small{color:#666}
 <input id="end_date" type="datetime-local">
 <label>حالة المزاد</label>
 <select id="status">
+<option value="pending">بانتظار المراجعة</option>
 <option value="published">منشور</option>
 <option value="draft">مسودة</option>
+<option value="ended">منتهي / مؤرشف</option>
+<option value="postponed">مؤجل</option>
+<option value="cancelled">ملغي</option>
 </select>
 <button type="submit">حفظ المزاد</button>
 <button type="button" class="secondary" onclick="resetForm()">إلغاء</button>
@@ -128,7 +132,9 @@ async function loadAuctions(){
    const title=document.createElement("strong");
    title.textContent=a.title||"بدون عنوان";
    const info=document.createElement("p");
-   info.textContent="التصنيف: "+(a.category||"-")+" | الحالة: "+(a.status||"-");
+   const endedByDate = a.end_date && !Number.isNaN(new Date(a.end_date).getTime()) && new Date(a.end_date) < new Date();
+   const statusText = a.status === "cancelled" ? "ملغي" : a.status === "postponed" ? "مؤجل" : a.status === "ended" || endedByDate ? "منتهي / يحتاج أرشفة" : a.status === "published" ? "منشور" : a.status || "-";
+   info.textContent="التصنيف: "+(a.category||"-")+" | الحالة: "+statusText;
    const edit=document.createElement("button");
    edit.textContent="تعديل";
    edit.onclick=()=>editAuction(a);
