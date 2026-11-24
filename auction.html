@@ -57,7 +57,17 @@ const result = document.getElementById("result");
 function esc(value){return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function safeURL(value){try{const u=new URL(value);return ["https:","http:"].includes(u.protocol)?u.href:null;}catch{return null;}}
 function date(value){if(!value)return "غير محدد";const d=new Date(value);if(Number.isNaN(d.getTime()))return "غير محدد";return new Intl.DateTimeFormat("ar-SA",{year:"numeric",month:"long",day:"numeric"}).format(d);}
-function statusLabel(value){return ({published:"منشور",active:"قائم",ended:"منتهي",cancelled:"ملغي",postponed:"مؤجل",upcoming:"قادم"})[value] || "متاح";}
+function statusLabel(value,start,end){
+ if(value==="cancelled") return "ملغي";
+ if(value==="postponed") return "مؤجل";
+ if(value==="ended") return "منتهي";
+ const now=new Date();
+ const endDate=end?new Date(end):null;
+ const startDate=start?new Date(start):null;
+ if(endDate && !Number.isNaN(endDate.getTime()) && endDate<now) return "منتهي";
+ if(value==="active" || (startDate && !Number.isNaN(startDate.getTime()) && startDate<=now)) return "قائم";
+ return "قادم";
+}
 async function load(){
  const id = new URLSearchParams(location.search).get("id");
  if(!id || !/^\d+$/.test(id)){result.textContent="رابط المزاد غير صحيح.";return;}
@@ -88,7 +98,7 @@ async function load(){
  result.innerHTML=`
  ${image?`<img class="cover" src="${esc(image)}" alt="${esc(data.title)}" loading="lazy">`:""}
  <div class="content">
- <div class="tags"><span class="tag">${esc(data.category||"غير مصنف")}</span><span class="tag">${esc(data.location||"الموقع غير محدد")}</span><span class="tag status">${esc(statusLabel(data.status))}</span></div>
+ <div class="tags"><span class="tag">${esc(data.category||"غير مصنف")}</span><span class="tag">${esc(data.location||"الموقع غير محدد")}</span><span class="tag status">${esc(statusLabel(data.status,data.start_date,data.end_date))}</span></div>
  <h1>${esc(data.title)}</h1>
  <div class="details">
  <div class="detail"><small>الجهة المنظمة</small><strong>${esc(data.source_name||"غير محدد")}</strong></div>
