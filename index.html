@@ -285,9 +285,18 @@ function showMessage(title, message) {
 
 function renderAuctions() {
   let results = allAuctions.filter(item => {
-    const categoryMatch =
-      selectedCategory === "الكل" ||
-      (item.category || "").includes(selectedCategory);
+    const itemCategory = (item.category || "").toLowerCase();
+    const categoryTerms = {
+      "السيارات": ["سيارات","مركبات"],
+      "العقارات": ["عقارات"],
+      "المعدات": ["معدات","آليات","شاحنات"],
+      "الشركات": ["شركات","تصفيات"],
+      "السكراب": ["سكراب","خردة"],
+      "الأثاث": ["أثاث","أجهزة"],
+      "المواشي": ["مواشي","أغنام","إبل","إبل"]
+    };
+    const categoryMatch = selectedCategory === "الكل" ||
+      (categoryTerms[selectedCategory] || [selectedCategory]).some(term => itemCategory.includes(term));
 
     const searchText = [
       item.title,
