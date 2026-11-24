@@ -65,7 +65,9 @@ function statusLabel(value,start,end){
  const endDate=end?new Date(end):null;
  const startDate=start?new Date(start):null;
  if(endDate && !Number.isNaN(endDate.getTime()) && endDate<now) return "منتهي";
- if(value==="active" || (startDate && !Number.isNaN(startDate.getTime()) && startDate<=now)) return "قائم";
+ if(startDate && !Number.isNaN(startDate.getTime()) && startDate>now) return "قادم";
+ if(startDate && !Number.isNaN(startDate.getTime()) && startDate<=now && (!endDate || Number.isNaN(endDate.getTime()) || endDate>=now)) return "قائم";
+ if(!startDate && value==="active") return "قائم";
  return "قادم";
 }
 async function load(){
