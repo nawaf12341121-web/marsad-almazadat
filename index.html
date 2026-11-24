@@ -78,6 +78,11 @@ a{color:inherit}
 .auction-meta{display:flex;flex-wrap:wrap;gap:7px;color:#596780;font-size:12px}
 .auction-tag{background:#e9edf7;color:var(--navy);border-radius:20px;padding:6px 10px}
 .auction-status{font-weight:bold;color:#177245}
+.pagination{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:8px;margin:24px 0 12px}
+.pagination button{min-width:40px;height:40px;padding:0 12px;border:1px solid #d7deea;border-radius:10px;background:#fff;color:var(--navy);font:bold 14px Tahoma;cursor:pointer}
+.pagination button:hover:not(:disabled),.pagination button.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.pagination button:disabled{opacity:.4;cursor:not-allowed}
+.pagination-info{width:100%;text-align:center;color:#66748b;font-size:12px;margin-top:4px}
 .auction-link{display:block;text-align:center;text-decoration:none;background:var(--navy);color:#fff;border-radius:25px;padding:11px;margin-top:auto;font-weight:bold}
 .auction-link:hover{background:var(--navy2)}
 .empty{grid-column:1/-1;background:white;border:1px solid #e2e7f0;border-radius:15px;text-align:center;padding:40px 20px}
@@ -108,7 +113,7 @@ a{color:inherit}
 .search{height:49px}.search input{font-size:12px;padding:0 10px}.search button{padding:0 18px;font-size:13px}
 .categories{grid-template-columns:repeat(2,1fr);padding:0 12px}.category{min-height:82px;font-size:13px}.category .icon{font-size:25px}
 .notice{padding:0 12px}.notice-content{display:block;text-align:center;font-size:12px}.notice-title{display:inline-block;margin-bottom:8px}
-.main{padding:0 12px 20px}.section-title h2{font-size:21px}.auctions{grid-template-columns:1fr}
+.main{padding:0 12px 20px}.section-title h2{font-size:21px}.auctions{grid-template-columns:1fr}.pagination{gap:5px}.pagination button{min-width:36px;height:36px;padding:0 9px}
 .features{padding:0 12px}.features-inner{grid-template-columns:repeat(2,1fr);border-radius:20px}
 .feature{font-size:12px}.feature:nth-child(3){border-right:0}.information{padding:0 12px}
 }
@@ -172,6 +177,7 @@ a{color:inherit}
 <div class="auctions" id="auctionGrid">
 <div class="empty"><div style="font-size:40px;color:#f2b51b">⌕</div><h3>جارٍ تحميل المزادات</h3><p>نبحث عن المزادات المنشورة في المرصد.</p></div>
 </div>
+<nav class="pagination" id="pagination" aria-label="صفحات المزادات" hidden></nav>
 </main>
 
 <section class="features">
@@ -254,6 +260,8 @@ const connectionStatus = document.getElementById("connectionStatus");
 let allAuctions = [];
 let selectedCategory = "الكل";
 let currentSearch = "";
+let currentPage = 1;
+const auctionsPerPage = 10;
 
 function escapeHTML(value) {
   return String(value ?? "").replace(/[&<>"']/g, char => ({
@@ -280,6 +288,7 @@ function formatDate(value) {
 }
 
 function showMessage(title, message) {
+  document.getElementById("pagination").hidden = true;
   grid.innerHTML = `
     <div class="empty">
       <div style="font-size:40px;color:#f2b51b">⌕</div>
@@ -315,7 +324,7 @@ function renderAuctions() {
     const searchText = [item.title,item.description,item.category,item.location,item.source_name].join(" ").toLowerCase();
     return categoryMatch && (!currentSearch || searchText.includes(currentSearch.toLowerCase()));
   });
-  if (!results.length) { showMessage("لا توجد مزادات مطابقة","جرّب البحث بكلمات أخرى أو اختر تصنيفاً مختلفاً."); return; }
+  if (!results.length) { currentPage = 1; showMessage("لا توجد مزادات مطابقة","جرّب البحث بكلمات أخرى أو اختر تصنيفاً مختلفاً."); return; }
   const groups = [
     {key:"active", title:"المزادات الجارية"},
     {key:"upcoming", title:"المزادات القادمة"},
@@ -323,6 +332,9 @@ function renderAuctions() {
   ];
   const rank = {active:0, upcoming:1, ended:2, cancelled:1, postponed:1};
   results.sort((a,b) => (rank[getAuctionStatus(a)] ?? 1) - (rank[getAuctionStatus(b)] ?? 1));
+  const totalPages = Math.ceil(results.length / auctionsPerPage);
+  currentPage = Math.min(Math.max(currentPage, 1), totalPages);
+  const pageResults = results.slice((currentPage - 1) * auctionsPerPage, currentPage * auctionsPerPage);
   const cardHTML = item => {
     const state = getAuctionStatus(item);
     const status = state === "active" ? "يجري الآن" : state === "ended" ? "منتهي" : state === "cancelled" ? "ملغي" : state === "postponed" ? "مؤجل" : "قادم";
@@ -333,12 +345,24 @@ function renderAuctions() {
     return `<article class="auction-card">${image ? `<img class="auction-image" src="${escapeHTML(image)}" alt="${title}" loading="lazy">` : ""}<div class="auction-meta"><span class="auction-tag">${category}</span><span class="auction-tag">${city}</span></div><h3>${title}</h3><p>${description}</p><div class="auction-meta"><span>📅 البداية: ${escapeHTML(formatDate(item.start_date))}</span></div><div class="auction-meta"><span>🏢 ${source}</span><span class="auction-status ${state}">${status}</span></div><div class="auction-actions"><a class="auction-detail-link" href="auction.html?id=${encodeURIComponent(item.id)}">عرض تفاصيل المزاد ←</a>${auctionLink ? `<a class="auction-source-link" href="${escapeHTML(auctionLink)}" target="_blank" rel="noopener noreferrer">زيارة صفحة المزاد الأصلية ↗</a>` : sourceLink ? `<a class="auction-source-link" href="${escapeHTML(sourceLink)}" target="_blank" rel="noopener noreferrer">زيارة المصدر ↗</a>` : ""}</div></article>`;
   };
   grid.innerHTML = groups.map(group => {
-    const items = results.filter(item => getAuctionStatus(item) === group.key);
+    const items = pageResults.filter(item => getAuctionStatus(item) === group.key);
     if (!items.length) return "";
     return `<section class="auction-group"><h3 class="auction-group-title">${group.title}<span>${items.length} مزاد</span></h3><div class="auctions">${items.map(cardHTML).join("")}</div></section>`;
   }).join("");
-  const special = results.filter(item => ["cancelled","postponed"].includes(getAuctionStatus(item)));
+  const special = pageResults.filter(item => ["cancelled","postponed"].includes(getAuctionStatus(item)));
   if (special.length) grid.innerHTML += `<section class="auction-group"><h3 class="auction-group-title">مزادات مؤجلة أو ملغاة</h3><div class="auctions">${special.map(cardHTML).join("")}</div></section>`;
+  renderPagination(results.length, totalPages);
+}
+
+function renderPagination(totalItems, totalPages) {
+  const pagination = document.getElementById("pagination");
+  if (totalPages <= 1) { pagination.hidden = true; pagination.innerHTML = ""; return; }
+  pagination.hidden = false;
+  const pageButtons = Array.from({length: totalPages}, (_, index) => {
+    const page = index + 1;
+    return `<button type="button" class="${page === currentPage ? "active" : ""}" data-page="${page}" aria-label="الصفحة ${page}" aria-current="${page === currentPage ? "page" : "false"}">${page}</button>`;
+  }).join("");
+  pagination.innerHTML = `<button type="button" data-page="${currentPage - 1}" ${currentPage === 1 ? "disabled" : ""} aria-label="الصفحة السابقة">السابق</button>${pageButtons}<button type="button" data-page="${currentPage + 1}" ${currentPage === totalPages ? "disabled" : ""} aria-label="الصفحة التالية">التالي</button><div class="pagination-info">عرض ${(currentPage - 1) * auctionsPerPage + 1}–${Math.min(currentPage * auctionsPerPage, totalItems)} من ${totalItems} مزاد</div>`;
 }
 async function loadAuctions() {
   connectionStatus.textContent = "جارٍ تحميل المزادات...";
@@ -374,8 +398,17 @@ async function loadAuctions() {
   }
 }
 
+document.getElementById("pagination").addEventListener("click", event => {
+  const button = event.target.closest("button[data-page]");
+  if (!button || button.disabled) return;
+  currentPage = Number(button.dataset.page);
+  renderAuctions();
+  document.getElementById("auctions").scrollIntoView({behavior:"smooth"});
+});
+
 document.getElementById("searchForm").addEventListener("submit", event => {
   event.preventDefault();
+  currentPage = 1;
   currentSearch = document.getElementById("searchInput").value.trim();
   renderAuctions();
   document.getElementById("auctions").scrollIntoView({behavior:"smooth"});
@@ -386,6 +419,7 @@ document.querySelectorAll(".category").forEach(category => {
     document.querySelectorAll(".category").forEach(item => item.classList.remove("active"));
     category.classList.add("active");
     selectedCategory = category.dataset.category;
+    currentPage = 1;
     renderAuctions();
   });
 });
@@ -394,6 +428,7 @@ document.getElementById("showAll").addEventListener("click", event => {
   event.preventDefault();
   selectedCategory = "الكل";
   currentSearch = "";
+  currentPage = 1;
   document.getElementById("searchInput").value = "";
   document.querySelectorAll(".category").forEach(item => {
     item.classList.toggle("active", item.dataset.category === "الكل");
